@@ -13,6 +13,11 @@ src/npvt_collector.py
 از طریق یک بات تلگرامی معمولی (Bot API) — به کانال مقصد ارسال می‌شود.
 این بات فقط باید در کانال *مقصد* خودتان دسترسی ارسال پیام داشته باشد؛ هیچ
 نیازی به عضویت در کانال‌های مبدأ یا هیچ اکانت کاربری نیست.
+
+همچنین، مثل پروژه‌ی V2ray-Collector، دو فایل گزارش تولید می‌شود:
+  - data/channel_report.txt   → تاریخچه‌ی تعداد فایل .npvt یافت‌شده در هر اجرا، به ازای هر کانال
+  - data/invalid_channels.txt → کانال‌هایی که در این اجرا هیچ پیامی از آن‌ها خوانده نشد
+                                 (وجود ندارند، خصوصی‌اند، یا مسدود شده‌اند)
 """
 from __future__ import annotations
 
@@ -22,6 +27,7 @@ import os
 import re
 import time
 from dataclasses import dataclass
+from datetime import datetime, timezone
 from pathlib import Path
 
 import requests
@@ -42,6 +48,8 @@ CHANNELS_FILE = DATA_DIR / "channels.txt"
 CHECKPOINT_FILE = DATA_DIR / "last_message_id.json"
 SEEN_FILES_FILE = DATA_DIR / "seen_files.json"
 REPORT_FILE = DATA_DIR / "npvt_report.txt"
+CHANNEL_REPORT_FILE = DATA_DIR / "channel_report.txt"
+INVALID_CHANNELS_FILE = DATA_DIR / "invalid_channels.txt"
 
 USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124 Safari/537.36"
 REQUEST_TIMEOUT = 15
@@ -143,20 +151,31 @@ def extract_npvt_from_node(node, channel: str, msg_id: int) -> NpvtFile | None:
 # ----------------------------------------------------------------------------
 # اسکن یک کانال (با صفحه‌بندی محدود برای رسیدن به چک‌پوینت قبلی)
 # ----------------------------------------------------------------------------
-def scan_channel(channel: str, last_id: int) -> tuple[list[NpvtFile], int]:
+def scan_channel(channel: str, last_id: int) -> tuple[list[NpvtFile], int, bool]:
+    """
+    خروجی: (فایل‌های .npvt پیدا‌شده, جدیدترین message_id دیده‌شده, آیا کانال نامعتبر است)
+    کانال «نامعتبر» یعنی: صفحه اصلاً واکشی نشد یا هیچ data-post (پیام) در آن پیدا نشد —
+    معمولاً به این معناست که کانال وجود ندارد، خصوصی است، یا دسترسی به آن مسدود شده.
+    """
     found: list[NpvtFile] = []
     newest_id = last_id
     before: int | None = None
+    first_page = True
+    invalid = False
 
     for page in range(MAX_PAGES_PER_CHANNEL):
         url = f"https://t.me/s/{channel}" + (f"?before={before}" if before else "")
         html = fetch_url(url)
         if not html:
+            if first_page:
+                invalid = True
             break
 
         soup = BeautifulSoup(html, "lxml")
         nodes = soup.select("[data-post]")
         if not nodes:
+            if first_page:
+                invalid = True
             break
 
         ids_on_page: list[int] = []
@@ -176,6 +195,7 @@ def scan_channel(channel: str, last_id: int) -> tuple[list[NpvtFile], int]:
             if item:
                 found.append(item)
 
+        first_page = False
         if not ids_on_page:
             break
 
@@ -187,7 +207,7 @@ def scan_channel(channel: str, last_id: int) -> tuple[list[NpvtFile], int]:
         if page < MAX_PAGES_PER_CHANNEL - 1:
             time.sleep(SLEEP_BETWEEN_PAGES)
 
-    return found, newest_id
+    return found, newest_id, invalid
 
 
 # ----------------------------------------------------------------------------
@@ -218,6 +238,49 @@ def send_link_message(item: NpvtFile) -> bool:
 
 
 # ----------------------------------------------------------------------------
+# گزارش‌ها: channel_report.txt (تاریخچه) و invalid_channels.txt (این اجرا)
+# ----------------------------------------------------------------------------
+def update_channel_report(channel_results: list[tuple[str, str]]) -> None:
+    """
+    channel_results: لیستی از (channel, value) که value یا تعداد فایل .npvt
+    پیدا‌شده (به‌صورت رشته) و یا "ERR" برای کانال نامعتبر است.
+    مثل V2ray-Collector، تاریخچه‌ی همه‌ی اجراهای قبلی هم نگه داشته می‌شود.
+    """
+    history: dict[str, list[str]] = {}
+    if CHANNEL_REPORT_FILE.exists():
+        with open(CHANNEL_REPORT_FILE, "r", encoding="utf-8") as f:
+            for line in f:
+                line = line.strip()
+                if not line or ":" not in line:
+                    continue
+                ch, counts = line.split(":", 1)
+                ch = ch.strip()
+                values = [c.strip() for c in counts.split(",") if c.strip()]
+                history[ch] = values
+
+    for ch, value in channel_results:
+        history.setdefault(ch, []).append(value)
+
+    CHANNEL_REPORT_FILE.parent.mkdir(parents=True, exist_ok=True)
+    with open(CHANNEL_REPORT_FILE, "w", encoding="utf-8") as f:
+        f.write(f"NPVT Channel Report — last update: {datetime.now(timezone.utc).isoformat()}\n\n")
+        for ch in sorted(history.keys()):
+            f.write(f"{ch}: {', '.join(history[ch])}\n")
+
+    logger.info("📊 تاریخچه‌ی کانال‌ها در %s به‌روزرسانی شد.", CHANNEL_REPORT_FILE)
+
+
+def write_invalid_channels(invalid_channels: list[str]) -> None:
+    INVALID_CHANNELS_FILE.parent.mkdir(parents=True, exist_ok=True)
+    with open(INVALID_CHANNELS_FILE, "w", encoding="utf-8") as f:
+        f.write(f"Invalid Telegram Channels — {datetime.now(timezone.utc).isoformat()}\n\n")
+        for ch in invalid_channels:
+            f.write(f"{ch}\n")
+    if invalid_channels:
+        logger.info("📁 %d کانال نامعتبر در %s ذخیره شد.", len(invalid_channels), INVALID_CHANNELS_FILE)
+
+
+# ----------------------------------------------------------------------------
 # اجرای اصلی
 # ----------------------------------------------------------------------------
 def main() -> None:
@@ -233,13 +296,25 @@ def main() -> None:
     seen_files: dict = load_json(SEEN_FILES_FILE, {})
 
     all_new: list[NpvtFile] = []
+    channel_results: list[tuple[str, str]] = []  # برای channel_report.txt
+    invalid_channels: list[str] = []              # برای invalid_channels.txt
+
     for idx, ch in enumerate(channels, 1):
         logger.info("📡 [%d/%d] بررسی کانال: %s", idx, len(channels), ch)
         last_id = checkpoints.get(ch, 0)
-        found, newest_id = scan_channel(ch, last_id)
+        found, newest_id, invalid = scan_channel(ch, last_id)
 
-        if found:
-            logger.info("   ↳ %d فایل .npvt جدید پیدا شد.", len(found))
+        if invalid:
+            logger.warning("   ↳ ⚠️ کانال نامعتبر یا غیرقابل‌دسترسی (وجود ندارد/خصوصی/مسدود).")
+            invalid_channels.append(ch)
+            channel_results.append((ch, "ERR"))
+        else:
+            if found:
+                logger.info("   ↳ %d فایل .npvt جدید پیدا شد.", len(found))
+            else:
+                logger.info("   ↳ فایل .npvt جدیدی پیدا نشد.")
+            channel_results.append((ch, str(len(found))))
+
         if newest_id:
             checkpoints[ch] = max(newest_id, last_id)
 
@@ -289,16 +364,19 @@ def main() -> None:
 
     save_json(CHECKPOINT_FILE, checkpoints)
     save_json(SEEN_FILES_FILE, seen_files)
+    update_channel_report(channel_results)
+    write_invalid_channels(invalid_channels)
 
     REPORT_FILE.parent.mkdir(parents=True, exist_ok=True)
     with open(REPORT_FILE, "a", encoding="utf-8") as f:
         f.write(
             f"{time.strftime('%Y-%m-%d %H:%M:%S')} | found={len(all_new)} "
             f"duplicates={duplicate_in_batch} already_sent={already_sent} "
-            f"new={len(to_send)} sent={sent} failed={failed}\n"
+            f"new={len(to_send)} sent={sent} failed={failed} "
+            f"invalid_channels={len(invalid_channels)}\n"
         )
 
-    logger.info("✅ پایان اجرا. ارسال‌شده: %d | ناموفق: %d", sent, failed)
+    logger.info("✅ پایان اجرا. ارسال‌شده: %d | ناموفق: %d | کانال نامعتبر: %d", sent, failed, len(invalid_channels))
 
 
 if __name__ == "__main__":

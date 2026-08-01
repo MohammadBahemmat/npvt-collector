@@ -1,6 +1,6 @@
 <!-- README.EN.md -->
 <div align="center" style="margin-bottom: 20px;">
-  <a href="https://github.com/YOUR_USERNAME/npvt-collector/blob/main/README.md">
+  <a href="https://github.com/MohammadBahemmat/npvt-collector/blob/main/README.md">
     <img src="https://img.shields.io/badge/Read_in-Farsi-FF5722?style=for-the-badge&logo=readthedocs" alt="Read in Farsi">
   </a>
 </div>
@@ -12,7 +12,7 @@
 
 <img src="https://img.shields.io/badge/Python-3.10+-blue?style=for-the-badge&logo=python&logoColor=white" alt="Python">
 <img src="https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge&logo=open-source-initiative" alt="License">
-<a href="https://github.com/YOUR_USERNAME/npvt-collector/blob/main/config/requirements.txt">
+<a href="https://github.com/MohammadBahemmat/npvt-collector/blob/main/config/requirements.txt">
     <img src="https://img.shields.io/badge/Requirements-txt-critical?style=for-the-badge&logo=pypi" alt="Requirements">
 </a>
 <img src="https://img.shields.io/badge/Platform-GitHub_Actions-2088FF?style=for-the-badge&logo=github-actions" alt="GitHub Actions">
@@ -20,7 +20,7 @@
 
 </div>
 
-<img src="https://github.com/YOUR_USERNAME/npvt-collector/actions/workflows/collector.yml/badge.svg" alt="Collector Status">
+<img src="https://github.com/MohammadBahemmat/npvt-collector/actions/workflows/collector.yml/badge.svg" alt="Collector Status">
 
 <img src="line.gif" alt="separator" style="display: block; margin: 30px auto;" />
 
@@ -70,6 +70,14 @@ Every newly found file is compared against previously seen files by <strong>name
 <tr>
     <td><strong>📊 Per-run report</strong></td>
     <td>A summary of every run (found, duplicate, new, sent counts) is logged to <code>data/npvt_report.txt</code>.</td>
+</tr>
+<tr>
+    <td><strong>📈 Per-channel report (like V2ray-Collector)</strong></td>
+    <td><code>data/channel_report.txt</code> shows how many <code>.npvt</code> files were found per channel on every run; unreachable channels are also listed in <code>data/invalid_channels.txt</code>.</td>
+</tr>
+<tr>
+    <td><strong>🔁 Continuous self-chaining runs</strong></td>
+    <td>Just like <code>V2ray-Collector</code>, each run immediately triggers the next one when it finishes, and the cycle continues until you stop it.</td>
 </tr>
 <tr>
     <td><strong>🚀 Fully automated & free</strong></td>
@@ -131,7 +139,19 @@ Real message forwarding from channels you don't administer is only possible with
 <pre class="ltr-block">
 BOT_TOKEN         → the token you got from BotFather
 TARGET_CHANNEL    → username (e.g. @npvt_backup) or numeric ID (e.g. -100xxxxxxxxxx) of the target channel
+GH_TOKEN          → a Personal Access Token with repo + workflow scope (needed for the self-chaining run)
 </pre>
+</div>
+
+<div class="highlight">
+<strong>🔗 About <code>GH_TOKEN</code> and self-chaining runs:</strong> Just like <code>V2ray-Collector</code>, instead of a fixed cron schedule, this project triggers the next run itself at the end of every run, and the cycle continues forever. The default token GitHub Actions creates (<code>GITHUB_TOKEN</code>) is not allowed, for security reasons, to trigger another workflow run — so a personal <strong>Personal Access Token</strong> is required. It's free to create:
+<ol>
+<li>Go to <a href="https://github.com/settings/tokens?type=beta" target="_blank">github.com/settings/tokens</a> (or Settings → Developer settings → Personal access tokens → Tokens (classic))</li>
+<li>Click <strong>Generate new token (classic)</strong></li>
+<li>Check the <code>repo</code> and <code>workflow</code> scopes</li>
+<li>Copy the generated token and save it as a secret named <code>GH_TOKEN</code></li>
+</ol>
+⚠️ Since this token is equivalent to scoped access to your GitHub account, set an expiration date on it and never store it anywhere other than GitHub Secrets.
 </div>
 
 <img src="line.gif" alt="separator" style="display: block; margin: 30px auto;" />
@@ -142,7 +162,7 @@ TARGET_CHANNEL    → username (e.g. @npvt_backup) or numeric ID (e.g. -100xxxxx
 <ol>
     <li>Fork the repository (Fork button at the top of the GitHub page)</li>
     <li>Clone your fork:
-        <pre class="ltr-block">git clone https://github.com/YOUR_USERNAME/npvt-collector.git
+        <pre class="ltr-block">git clone https://github.com/MohammadBahemmat/npvt-collector.git
 cd npvt-collector</pre>
     </li>
     <li>Install the Python dependencies:
@@ -160,17 +180,33 @@ cd npvt-collector</pre>
 <!-- Automated run -->
 <h2>🤖 Setting Up Automated Runs with GitHub Actions</h2>
 
-<h3>1. Workflow file</h3>
-<p>By default, the project runs via a YAML file at <code>.github/workflows/collector.yml</code>, which:</p>
+<h3>1. Workflow file (self-chaining, just like V2ray-Collector)</h3>
+<p>The project runs via a YAML file at <code>.github/workflows/collector.yml</code>, which:</p>
 <ul>
-    <li>Runs <strong>hourly</strong> (<code>cron</code>) and can also be triggered manually via <strong>workflow_dispatch</strong>.</li>
+    <li>Only starts via <strong>workflow_dispatch</strong> (one initial manual run) — there's no fixed <code>cron</code>.</li>
     <li>Scans every channel listed in <code>data/channels.txt</code>.</li>
     <li>Removes duplicates and sends links for new files to the target channel.</li>
-    <li>Commits the updated state files (checkpoint, dedup archive, report) back to the repository.</li>
+    <li>Commits the updated state files (checkpoint, dedup archive, <code>channel_report.txt</code>, <code>invalid_channels.txt</code>) back to the repository.</li>
+    <li><strong>Immediately after a successful run, it triggers a new run itself</strong> (the "Trigger next run" step), and this cycle continues until you stop it.</li>
 </ul>
+
+<div class="highlight">
+<strong>⚠️ Important note about the continuous self-chaining run:</strong>
+<ul>
+<li>If a run fails (e.g. a network hiccup or rate limit), the "Trigger next run" step won't execute and the chain stops completely; you'll need to trigger it again manually from the Actions tab (<strong>Run workflow</strong>).</li>
+<li>Since each run immediately triggers the next one with no delay, on <strong>Private</strong> repositories the free GitHub Actions minutes quota (typically 2,000 minutes/month) can be consumed faster than with an hourly schedule. To manage this, you can increase <code>SLEEP_BETWEEN_CHANNELS</code>, <code>SLEEP_BETWEEN_PAGES</code>, and <code>SLEEP_BETWEEN_SENDS</code> in <code>config/.env.example</code> so each run takes a bit longer between cycles, or switch <code>on: workflow_dispatch</code> to a simple <code>schedule: cron</code> (e.g. every 10 minutes) for a fixed-interval run instead of a continuous chain.</li>
+</ul>
+</div>
 
 <h3>2. Adding source channels</h3>
 <p><code>data/channels.txt</code> holds the list of public Telegram channels (one username per line, no <code>@</code>). To add a new channel, just add its username on a new line — no membership or special access needed.</p>
+
+<h3>3. Per-channel status report</h3>
+<p>After every run, two files under <code>data/</code> are updated:</p>
+<ul>
+    <li><code>channel_report.txt</code> — for each channel, shows the history of how many <code>.npvt</code> files were found on each run, comma-separated in order; e.g. <code>napsternetv_file: 2, 0, 1</code> means the last three runs found 2, 0, and 1 new files respectively.</li>
+    <li><code>invalid_channels.txt</code> — lists channels that couldn't be read at all in the most recent run (doesn't exist, private, or blocked). These channels also show up as <code>ERR</code> in <code>channel_report.txt</code>.</li>
+</ul>
 
 <img src="line.gif" alt="separator" style="display: block; margin: 30px auto;" />
 
@@ -194,7 +230,9 @@ cd npvt-collector</pre>
 │   ├── channels.txt               # list of Telegram channels (input)
 │   ├── last_message_id.json       # (generated) last checked message_id per channel
 │   ├── seen_files.json            # (generated) archive of already-sent files (name+size)
-│   └── npvt_report.txt            # (generated) per-run summary report
+│   ├── npvt_report.txt            # (generated) per-run summary report
+│   ├── channel_report.txt         # (generated) per-channel history of files found
+│   └── invalid_channels.txt       # (generated) unreachable/invalid channels from the latest run
 │
 ├── line.gif                       # animated separator for the README
 ├── README.md                      # Persian documentation
@@ -250,6 +288,23 @@ cd npvt-collector</pre>
 <ul>
     <li>Check that the <code>Commit and push updated state</code> step in the workflow ran without errors.</li>
     <li>Make sure <code>permissions: contents: write</code> hasn't been removed from <code>collector.yml</code>.</li>
+</ul>
+</details>
+
+<details>
+<summary><strong>A channel always shows <code>ERR</code> in <code>channel_report.txt</code></strong></summary>
+<ul>
+    <li>It means that channel couldn't be read at all in the last run — usually a wrong username, a deleted/private channel, or a temporary block by Telegram.</li>
+    <li>Test the username in your browser at <code>https://t.me/s/&lt;username&gt;</code>; if the page doesn't load or is empty, that same channel will also appear in <code>data/invalid_channels.txt</code>.</li>
+</ul>
+</details>
+
+<details>
+<summary><strong>The self-chaining run has stopped and isn't triggering itself anymore</strong></summary>
+<ul>
+    <li>If a run finishes with a failure, the <code>Trigger next run</code> step won't execute and the cycle stays stopped — this is intentional, so errors don't repeat silently.</li>
+    <li>Open the <strong>Actions</strong> tab, check the last failed run, and fix the cause (e.g. a wrong secret, or an expired <code>GH_TOKEN</code>).</li>
+    <li>Then trigger <strong>Run workflow</strong> manually once more to restart the chain.</li>
 </ul>
 </details>
 

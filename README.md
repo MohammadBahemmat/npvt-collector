@@ -21,7 +21,7 @@
 
 </div>
 
-<img src="https://github.com/YOUR_USERNAME/npvt-collector/actions/workflows/collector.yml/badge.svg" alt="Collector Status">
+<img src="https://github.com/MohammadBahemmat/npvt-collector/actions/workflows/collector.yml/badge.svg" alt="Collector Status">
 
 <img src="line.gif" alt="separator" style="display: block; margin: 30px auto;" />
 

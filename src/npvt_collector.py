@@ -70,7 +70,7 @@ SLEEP_BETWEEN_PAGES = float(os.getenv("SLEEP_BETWEEN_PAGES", "1"))
 # تلگرام برای پیام‌های یک بات به یک چت، تقریباً حداکثر ۲۰ پیام در دقیقه را
 # مجاز می‌داند؛ ۳.۵ ثانیه فاصله ≈ ۱۷ پیام در دقیقه، با کمی حاشیه‌ی امن.
 SLEEP_BETWEEN_SENDS = float(os.getenv("SLEEP_BETWEEN_SENDS", "3.5"))
-MAX_PAGES_PER_CHANNEL = int(os.getenv("MAX_PAGES_PER_CHANNEL", "3"))
+MAX_PAGES_PER_CHANNEL = int(os.getenv("MAX_PAGES_PER_CHANNEL", "1"))
 
 # ---- تلاش مجدد هنگام محدودیت نرخ ارسال (429 Too Many Requests) ----
 # اگر تلگرام یک پیام را رد کند و بگوید «بعد از N ثانیه دوباره امتحان کن»،

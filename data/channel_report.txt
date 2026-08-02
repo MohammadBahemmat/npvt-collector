@@ -1,4 +1,4 @@
-NPVT Channel Report — last update: 2026-08-02T06:51:26.224003+00:00
+NPVT Channel Report — last update: 2026-08-02T06:55:39.866221+00:00
 
 +jtinm8-guq41otji: ERR
 Cov2ray: ERR
@@ -31,3 +31,18 @@ amir_v2ray: 0
 amirali_vpn: ERR
 amirbardia_v2ray: ERR
 anotherme_night: 0
+antifilterjadid: 0
+anty_filter: 9
+appsooner: 0
+appxa: 0
+ar14n24b: 0
+archive_android: 40
+arisping: 2
+armanstore2: 0
+armin_vpn: 0
+arshia_vpn: ERR
+arv2ray: 3
+arya_vpn: ERR
+aryan_vpn: 0
+ashkan_vpn: 0
+astrovpn_official: 1

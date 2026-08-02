@@ -1,0 +1,1 @@
+2026-08-02 12:15:16 | found=1010 duplicates=129 already_sent=0 attempted=40 sent=40 failed=0 pending_queue=841 filtered=21 invalid_channels=325

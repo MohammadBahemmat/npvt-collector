@@ -1,4 +1,4 @@
-Invalid Telegram Channels — 2026-08-02T19:06:15.177504+00:00
+Invalid Telegram Channels — 2026-08-02T19:46:53.673740+00:00
 
 +jtinm8-guq41otji
 Cov2ray
@@ -287,6 +287,7 @@ v2ray_v_vpn
 v2raychannel
 v2raycollectordonate
 v2rayng_config_amin
+v2rayng_ip
 v2rayng_org
 v2rayng_vpnrog
 v2rayngg_iran

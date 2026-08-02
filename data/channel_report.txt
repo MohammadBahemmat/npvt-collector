@@ -1,4 +1,4 @@
-NPVT Channel Report — last update: 2026-08-02T06:55:39.866221+00:00
+NPVT Channel Report — last update: 2026-08-02T06:58:46.561865+00:00
 
 +jtinm8-guq41otji: ERR
 Cov2ray: ERR
@@ -46,3 +46,18 @@ arya_vpn: ERR
 aryan_vpn: 0
 ashkan_vpn: 0
 astrovpn_official: 1
+ava_vpn: 0
+awc_vpn: ERR
+awlix_ir: 15
+azadboy: ERR
+azadi_az_inja_migzare: 0
+azadi_vpn: 0
+azadnet: 4
+azarbayjab1: 0
+azdeltaghalam7: 4
+b2vasl1: 0
+b_vpn_free: ERR
+badk_vpn: ERR
+balepingbot: ERR
+balesup: ERR
+baserivpnbot: ERR

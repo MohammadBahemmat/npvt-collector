@@ -130,7 +130,12 @@ Real message forwarding from channels you don't administer is only possible with
 <tr><td><code>MAX_PAGES_PER_CHANNEL</code></td><td><code>3</code></td><td>Max number of backward pages (<code>?before=</code>) to reach the previous checkpoint</td></tr>
 <tr><td><code>SLEEP_BETWEEN_CHANNELS</code></td><td><code>1.5</code></td><td>Delay (seconds) between checking channels</td></tr>
 <tr><td><code>SLEEP_BETWEEN_PAGES</code></td><td><code>1</code></td><td>Delay (seconds) between pages of a single channel</td></tr>
-<tr><td><code>SLEEP_BETWEEN_SENDS</code></td><td><code>1.5</code></td><td>Delay (seconds) between messages sent via the bot</td></tr>
+<tr><td><code>SLEEP_BETWEEN_SENDS</code></td><td><code>3.5</code></td><td>Delay (seconds) between messages sent via the bot — keeps you under Telegram's ~20 messages/minute limit</td></tr>
+<tr><td><code>REQUEST_TIMEOUT</code></td><td><code>10</code></td><td>Max time (seconds) to wait for each HTTP request before it's considered failed</td></tr>
+<tr><td><code>CHANNELS_PER_RUN</code></td><td><code>15</code></td><td>How many channels <strong>each run</strong> checks (not necessarily all of them); the next run continues from where this one stopped, in rotation. <code>0</code> means all channels in one run (only recommended for short lists)</td></tr>
+<tr><td><code>MAX_SEND_RETRIES</code></td><td><code>6</code></td><td>Max number of retry attempts for a single message when Telegram returns a 429 (rate limit) error</td></tr>
+<tr><td><code>MAX_RETRY_AFTER_WAIT</code></td><td><code>90</code></td><td>Max time (seconds) to wait on any single retry, even if Telegram asks for longer</td></tr>
+<tr><td><code>MAX_SENDS_PER_RUN</code></td><td><code>40</code></td><td>Max number of messages <strong>each run</strong> attempts to send; the rest stay queued in <code>data/pending_send.json</code> for the next run</td></tr>
 </tbody>
 </table>
 
@@ -195,6 +200,7 @@ cd npvt-collector</pre>
 <ul>
 <li>If a run fails (e.g. a network hiccup or rate limit), the "Trigger next run" step won't execute and the chain stops completely; you'll need to trigger it again manually from the Actions tab (<strong>Run workflow</strong>).</li>
 <li>Since each run immediately triggers the next one with no delay, on <strong>Private</strong> repositories the free GitHub Actions minutes quota (typically 2,000 minutes/month) can be consumed faster than with an hourly schedule. To manage this, you can increase <code>SLEEP_BETWEEN_CHANNELS</code>, <code>SLEEP_BETWEEN_PAGES</code>, and <code>SLEEP_BETWEEN_SENDS</code> in <code>config/.env.example</code> so each run takes a bit longer between cycles, or switch <code>on: workflow_dispatch</code> to a simple <code>schedule: cron</code> (e.g. every 10 minutes) for a fixed-interval run instead of a continuous chain.</li>
+<li><strong>Batching to avoid timeouts:</strong> so that a long channel list (or the very first run, when no checkpoint exists yet) doesn't push the whole job past the time limit (<code>timeout-minutes: 20</code>), each run only checks <code>CHANNELS_PER_RUN</code> channels (default 15), and the next run continues from the next channel in rotation — this progress is tracked in <code>data/channel_cursor.json</code>.</li>
 </ul>
 </div>
 
@@ -205,7 +211,7 @@ cd npvt-collector</pre>
 <p>After every run, two files under <code>data/</code> are updated:</p>
 <ul>
     <li><code>channel_report.txt</code> — for each channel, shows the history of how many <code>.npvt</code> files were found on each run, comma-separated in order; e.g. <code>napsternetv_file: 2, 0, 1</code> means the last three runs found 2, 0, and 1 new files respectively.</li>
-    <li><code>invalid_channels.txt</code> — lists channels that couldn't be read at all in the most recent run (doesn't exist, private, or blocked). These channels also show up as <code>ERR</code> in <code>channel_report.txt</code>.</li>
+    <li><code>invalid_channels.txt</code> — an up-to-date list of channels that weren't readable the last time they were tested (doesn't exist, private, or blocked). Since each run only tests part of the channel list, this file is merged with fresh results each run rather than fully overwritten. These channels also show up as <code>ERR</code> in <code>channel_report.txt</code>.</li>
 </ul>
 
 <img src="line.gif" alt="separator" style="display: block; margin: 30px auto;" />
@@ -229,7 +235,9 @@ cd npvt-collector</pre>
 ├── data/                          # data files and reports
 │   ├── channels.txt               # list of Telegram channels (input)
 │   ├── last_message_id.json       # (generated) last checked message_id per channel
+│   ├── channel_cursor.json        # (generated) rotation position for batched channel processing
 │   ├── seen_files.json            # (generated) archive of already-sent files (name+size)
+│   ├── pending_send.json          # (generated) queue of files not sent yet
 │   ├── npvt_report.txt            # (generated) per-run summary report
 │   ├── channel_report.txt         # (generated) per-channel history of files found
 │   └── invalid_channels.txt       # (generated) unreachable/invalid channels from the latest run
@@ -288,6 +296,23 @@ cd npvt-collector</pre>
 <ul>
     <li>Check that the <code>Commit and push updated state</code> step in the workflow ran without errors.</li>
     <li>Make sure <code>permissions: contents: write</code> hasn't been removed from <code>collector.yml</code>.</li>
+</ul>
+</details>
+
+<details>
+<summary><strong>I'm seeing lots of <code>429 Too Many Requests</code> errors in the log</strong></summary>
+<ul>
+    <li>This means Telegram is throttling how fast the bot can post to the target channel (roughly a 20 messages/minute cap per chat). This is now handled automatically: the script waits exactly as long as the <code>retry_after</code> value Telegram returns, then retries (up to <code>MAX_SEND_RETRIES</code> times).</li>
+    <li>If it still fails after all retries, the message is <strong>not lost</strong> — it's saved to <code>data/pending_send.json</code> and retried again on the next run.</li>
+    <li>If this happens a lot, increase <code>SLEEP_BETWEEN_SENDS</code> (e.g. to 5) or lower <code>MAX_SENDS_PER_RUN</code> to reduce pressure per run.</li>
+</ul>
+</details>
+
+<details>
+<summary><strong>Error: "The job has exceeded the maximum execution time"</strong></summary>
+<ul>
+    <li>This project no longer sets its own job-level time limit (<code>timeout-minutes</code> was intentionally removed from <code>collector.yml</code>), so this project's own settings won't be the cause.</li>
+    <li>However, GitHub Actions itself enforces an absolute, non-configurable <strong>360-minute (6-hour)</strong> cap on every job — this is a platform limit, not something this project defines. If you're hitting it, it usually means the channel list or send queue has grown very large; lower <code>CHANNELS_PER_RUN</code> and <code>MAX_SENDS_PER_RUN</code> so each run finishes faster (the remaining work automatically carries over to the next run).</li>
 </ul>
 </details>
 

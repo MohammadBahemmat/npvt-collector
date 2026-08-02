@@ -80,6 +80,10 @@ Every newly found file is compared against previously seen files by <strong>name
     <td>Just like <code>V2ray-Collector</code>, each run immediately triggers the next one when it finishes, and the cycle continues until you stop it.</td>
 </tr>
 <tr>
+    <td><strong>🚫 Filename keyword filter</strong></td>
+    <td>Files whose name contains a keyword defined in <code>data/blocked_keywords.txt</code> are never collected or published; a record is kept in <code>data/filtered_files.txt</code> purely for transparency.</td>
+</tr>
+<tr>
     <td><strong>🚀 Fully automated & free</strong></td>
     <td>The entire system runs on free GitHub Actions with a single workflow file — no external server needed.</td>
 </tr>
@@ -98,6 +102,24 @@ Real message forwarding from channels you don't administer is only possible with
     <li><strong>Delivery</strong> only sends a <strong>link</strong> to the original message (not the file itself), via a <strong>plain Telegram bot</strong> — the exact same approach your <code>Telegram</code> project's <code>version_checker.py</code> already uses with <code>BOT_TOKEN</code> and <code>CHANNEL_ID</code>.</li>
 </ul>
 <p>Result: no personal account is ever at risk — just an ordinary bot (that you create via BotFather) posting to your own channel.</p>
+
+<img src="line.gif" alt="separator" style="display: block; margin: 30px auto;" />
+
+<!-- Keyword filter -->
+<h2>🚫 Filename Keyword Filter</h2>
+<p>
+Any file whose name contains one of the keywords below is never collected or published — not forwarded, not even linked. These keywords live in <code>data/blocked_keywords.txt</code> (auto-created with this default list on the first run, if the file doesn't already exist):
+</p>
+<pre class="ltr-block" dir="rtl">
+جاوید، جاویدنام، جاوید نام، شاه، آریامهر، آریا مهر، پهلوی،
+خمینی، خامنه ای، خامنه‌ای، سیدعلی، سید علی، مجتبی
+</pre>
+<ul>
+    <li><strong>Editing the list:</strong> just open <code>data/blocked_keywords.txt</code> and add or remove a keyword on its own line (lines starting with <code>#</code> are ignored). No Python code changes needed.</li>
+    <li><strong>Spacing-independent matching:</strong> the difference between "خامنه‌ای" (with a ZWNJ half-space), "خامنه ای" (with a regular space), and "خامنهای" (joined) is ignored; all three are recognized as the same.</li>
+    <li><strong>It's a substring match</strong>, not a whole-word match: e.g. with "شاه" enabled, a file named "شاهین.npvt" would also get filtered, since it contains that string. This is a known, intentional trade-off (favoring caution over precision, even at the cost of occasionally filtering an unrelated name).</li>
+    <li>Every filtered file is logged to <code>data/filtered_files.txt</code> purely for transparency/auditing — these files are never sent to the target channel.</li>
+</ul>
 
 <img src="line.gif" alt="separator" style="display: block; margin: 30px auto;" />
 
@@ -132,7 +154,6 @@ Real message forwarding from channels you don't administer is only possible with
 <tr><td><code>SLEEP_BETWEEN_PAGES</code></td><td><code>1</code></td><td>Delay (seconds) between pages of a single channel</td></tr>
 <tr><td><code>SLEEP_BETWEEN_SENDS</code></td><td><code>3.5</code></td><td>Delay (seconds) between messages sent via the bot — keeps you under Telegram's ~20 messages/minute limit</td></tr>
 <tr><td><code>REQUEST_TIMEOUT</code></td><td><code>10</code></td><td>Max time (seconds) to wait for each HTTP request before it's considered failed</td></tr>
-<tr><td><code>CHANNELS_PER_RUN</code></td><td><code>15</code></td><td>How many channels <strong>each run</strong> checks (not necessarily all of them); the next run continues from where this one stopped, in rotation. <code>0</code> means all channels in one run (only recommended for short lists)</td></tr>
 <tr><td><code>MAX_SEND_RETRIES</code></td><td><code>6</code></td><td>Max number of retry attempts for a single message when Telegram returns a 429 (rate limit) error</td></tr>
 <tr><td><code>MAX_RETRY_AFTER_WAIT</code></td><td><code>90</code></td><td>Max time (seconds) to wait on any single retry, even if Telegram asks for longer</td></tr>
 <tr><td><code>MAX_SENDS_PER_RUN</code></td><td><code>40</code></td><td>Max number of messages <strong>each run</strong> attempts to send; the rest stay queued in <code>data/pending_send.json</code> for the next run</td></tr>
@@ -200,7 +221,7 @@ cd npvt-collector</pre>
 <ul>
 <li>If a run fails (e.g. a network hiccup or rate limit), the "Trigger next run" step won't execute and the chain stops completely; you'll need to trigger it again manually from the Actions tab (<strong>Run workflow</strong>).</li>
 <li>Since each run immediately triggers the next one with no delay, on <strong>Private</strong> repositories the free GitHub Actions minutes quota (typically 2,000 minutes/month) can be consumed faster than with an hourly schedule. To manage this, you can increase <code>SLEEP_BETWEEN_CHANNELS</code>, <code>SLEEP_BETWEEN_PAGES</code>, and <code>SLEEP_BETWEEN_SENDS</code> in <code>config/.env.example</code> so each run takes a bit longer between cycles, or switch <code>on: workflow_dispatch</code> to a simple <code>schedule: cron</code> (e.g. every 10 minutes) for a fixed-interval run instead of a continuous chain.</li>
-<li><strong>Batching to avoid timeouts:</strong> so that a long channel list (or the very first run, when no checkpoint exists yet) doesn't push the whole job past the time limit (<code>timeout-minutes: 20</code>), each run only checks <code>CHANNELS_PER_RUN</code> channels (default 15), and the next run continues from the next channel in rotation — this progress is tracked in <code>data/channel_cursor.json</code>.</li>
+<li><strong>The job-level time limit was intentionally removed</strong> so a long run (e.g. due to a large channel list or a big send queue) doesn't get killed; however, GitHub Actions itself enforces an absolute, non-configurable 360-minute (6-hour) cap on every job.</li>
 </ul>
 </div>
 
@@ -234,13 +255,14 @@ cd npvt-collector</pre>
 │
 ├── data/                          # data files and reports
 │   ├── channels.txt               # list of Telegram channels (input)
+│   ├── blocked_keywords.txt       # blocked-keyword list (input; auto-created on first run)
 │   ├── last_message_id.json       # (generated) last checked message_id per channel
-│   ├── channel_cursor.json        # (generated) rotation position for batched channel processing
 │   ├── seen_files.json            # (generated) archive of already-sent files (name+size)
 │   ├── pending_send.json          # (generated) queue of files not sent yet
 │   ├── npvt_report.txt            # (generated) per-run summary report
 │   ├── channel_report.txt         # (generated) per-channel history of files found
-│   └── invalid_channels.txt       # (generated) unreachable/invalid channels from the latest run
+│   ├── invalid_channels.txt       # (generated) unreachable/invalid channels from the latest run
+│   └── filtered_files.txt         # (generated) files skipped due to a blocked keyword
 │
 ├── line.gif                       # animated separator for the README
 ├── README.md                      # Persian documentation
@@ -312,7 +334,7 @@ cd npvt-collector</pre>
 <summary><strong>Error: "The job has exceeded the maximum execution time"</strong></summary>
 <ul>
     <li>This project no longer sets its own job-level time limit (<code>timeout-minutes</code> was intentionally removed from <code>collector.yml</code>), so this project's own settings won't be the cause.</li>
-    <li>However, GitHub Actions itself enforces an absolute, non-configurable <strong>360-minute (6-hour)</strong> cap on every job — this is a platform limit, not something this project defines. If you're hitting it, it usually means the channel list or send queue has grown very large; lower <code>CHANNELS_PER_RUN</code> and <code>MAX_SENDS_PER_RUN</code> so each run finishes faster (the remaining work automatically carries over to the next run).</li>
+    <li>However, GitHub Actions itself enforces an absolute, non-configurable <strong>360-minute (6-hour)</strong> cap on every job — this is a platform limit, not something this project defines. If you're hitting it, it usually means your <code>data/channels.txt</code> list or send queue has grown very large; trim the channel list or lower <code>MAX_SENDS_PER_RUN</code> so each run finishes faster (the remaining send work automatically carries over to the next run).</li>
 </ul>
 </details>
 
@@ -321,6 +343,15 @@ cd npvt-collector</pre>
 <ul>
     <li>It means that channel couldn't be read at all in the last run — usually a wrong username, a deleted/private channel, or a temporary block by Telegram.</li>
     <li>Test the username in your browser at <code>https://t.me/s/&lt;username&gt;</code>; if the page doesn't load or is empty, that same channel will also appear in <code>data/invalid_channels.txt</code>.</li>
+</ul>
+</details>
+
+<details>
+<summary><strong>A file I expected never reached the target channel</strong></summary>
+<ul>
+    <li>First check <code>data/filtered_files.txt</code> — if the file's name matched a keyword in <code>data/blocked_keywords.txt</code>, it was intentionally not published.</li>
+    <li>If it's not there, check <code>data/seen_files.json</code>; if a file with the same name+size was already sent from a different channel, it's skipped as a duplicate.</li>
+    <li>Otherwise, check <code>data/pending_send.json</code> — it may still be queued (e.g. due to Telegram's rate limit).</li>
 </ul>
 </details>
 

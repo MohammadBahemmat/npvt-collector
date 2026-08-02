@@ -58,8 +58,9 @@ SEEN_FILES_FILE = DATA_DIR / "seen_files.json"
 REPORT_FILE = DATA_DIR / "npvt_report.txt"
 CHANNEL_REPORT_FILE = DATA_DIR / "channel_report.txt"
 INVALID_CHANNELS_FILE = DATA_DIR / "invalid_channels.txt"
-CURSOR_FILE = DATA_DIR / "channel_cursor.json"
 PENDING_FILE = DATA_DIR / "pending_send.json"
+BLOCKED_KEYWORDS_FILE = DATA_DIR / "blocked_keywords.txt"
+FILTERED_FILES_FILE = DATA_DIR / "filtered_files.txt"
 
 USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124 Safari/537.36"
 REQUEST_TIMEOUT = int(os.getenv("REQUEST_TIMEOUT", "10"))
@@ -85,17 +86,21 @@ MAX_RETRY_AFTER_WAIT = int(os.getenv("MAX_RETRY_AFTER_WAIT", "90"))
 # یعنی هیچ فایلی گم نمی‌شود، فقط با تأخیر ارسال می‌شود.
 MAX_SENDS_PER_RUN = int(os.getenv("MAX_SENDS_PER_RUN", "40"))
 
-# ---- پردازش دسته‌ای و چرخشی کانال‌ها ----
-# هر اجرا فقط این تعداد کانال را بررسی می‌کند (نه لزوماً کل لیست)؛ اجرای
-# بعدی از همان‌جا که این اجرا متوقف شده ادامه می‌دهد. این تضمین می‌کند که
-# مدت‌زمان هر اجرا صرف‌نظر از تعداد کل کانال‌ها یا حجم بک‌لاگ، محدود و
-# قابل‌پیش‌بینی بماند (و به Timeout گیت‌هاب اکشن نخورد).
-CHANNELS_PER_RUN = int(os.getenv("CHANNELS_PER_RUN", "15"))
-
 BOT_TOKEN = os.getenv("BOT_TOKEN", "")
 TARGET_CHANNEL = os.getenv("TARGET_CHANNEL", "")  # مثال: @my_channel یا -100xxxxxxxxxx
 
 FILE_SUFFIX = ".npvt"
+
+# ---- فیلتر نام فایل ----
+# فایل‌هایی که نامشان حاوی هر یک از این کلیدواژه‌ها باشد، اصلاً جمع‌آوری یا
+# منتشر نمی‌شوند. این لیست پیش‌فرض است؛ می‌توانید آن را در
+# data/blocked_keywords.txt (بدون نیاز به تغییر این فایل) ویرایش کنید.
+DEFAULT_BLOCKED_KEYWORDS = [
+    "جاوید", "جاویدنام", "جاوید نام",
+    "شاه", "آریامهر", "آریا مهر", "پهلوی",
+    "خمینی", "خامنه ای", "خامنه‌ای",
+    "سیدعلی", "سید علی", "مجتبی",
+]
 
 
 # ----------------------------------------------------------------------------
@@ -139,6 +144,39 @@ class NpvtFile:
 # ----------------------------------------------------------------------------
 # توابع کمکی
 # ----------------------------------------------------------------------------
+def normalize_fa(text: str) -> str:
+    """
+    برای مقایسه‌ی قابل‌اعتماد بین حالت‌های مختلف نگارشی یک عبارت فارسی
+    (با فاصله، با نیم‌فاصله ZWNJ، یا چسبیده)، همه‌ی این‌ها را حذف کرده و
+    به حروف کوچک تبدیل می‌کند؛ مثلاً «خامنه‌ای»، «خامنه ای» و «خامنهای»
+    همه به یک رشته‌ی یکسان تبدیل می‌شوند.
+    """
+    text = text.replace("\u200c", "")  # نیم‌فاصله (ZWNJ)
+    text = re.sub(r"\s+", "", text)
+    return text.strip().lower()
+
+
+def load_blocked_keywords() -> list[str]:
+    if not BLOCKED_KEYWORDS_FILE.exists():
+        # فایل هنوز ساخته نشده؛ لیست پیش‌فرض را روی دیسک هم می‌نویسیم تا
+        # کاربر بتواند بعداً آن را مستقیماً ویرایش کند.
+        BLOCKED_KEYWORDS_FILE.parent.mkdir(parents=True, exist_ok=True)
+        BLOCKED_KEYWORDS_FILE.write_text(
+            "# هر خط یک کلیدواژه؛ نام فایل‌هایی که حاوی هر یک از این‌ها باشند منتشر نمی‌شوند.\n"
+            "# خط‌هایی که با # شروع می‌شوند نادیده گرفته می‌شوند.\n"
+            + "\n".join(DEFAULT_BLOCKED_KEYWORDS) + "\n",
+            encoding="utf-8",
+        )
+        return list(DEFAULT_BLOCKED_KEYWORDS)
+
+    lines = BLOCKED_KEYWORDS_FILE.read_text(encoding="utf-8").splitlines()
+    keywords = [line.strip() for line in lines if line.strip() and not line.strip().startswith("#")]
+    return keywords
+
+
+BLOCKED_KEYWORDS = load_blocked_keywords()
+
+
 def load_channels() -> list[str]:
     if not CHANNELS_FILE.exists():
         logger.error("فایل %s پیدا نشد.", CHANNELS_FILE)
@@ -200,43 +238,27 @@ def extract_npvt_from_node(node, channel: str, msg_id: int) -> NpvtFile | None:
     )
 
 
-def select_batch(channels: list[str]) -> tuple[list[str], int, int]:
-    """
-    یک دسته‌ی چرخشی از کانال‌ها را برمی‌گرداند تا هر اجرا محدود بماند.
-    خروجی: (کانال‌های این اجرا, ایندکس شروع, ایندکس بعدی برای اجرای آینده)
-    """
-    cursor_data = load_json(CURSOR_FILE, {"index": 0})
-    total = len(channels)
-
-    if CHANNELS_PER_RUN <= 0 or CHANNELS_PER_RUN >= total:
-        return channels, 0, 0  # همه‌ی کانال‌ها در یک اجرا؛ بدون نیاز به چرخش
-
-    start = cursor_data.get("index", 0) % total
-    end = start + CHANNELS_PER_RUN
-
-    if end <= total:
-        batch = channels[start:end]
-    else:
-        # دور زدن به ابتدای لیست
-        batch = channels[start:total] + channels[0:end - total]
-
-    next_index = end % total
-    return batch, start, next_index
-
-
-def save_cursor(next_index: int) -> None:
-    save_json(CURSOR_FILE, {"index": next_index})
+def find_blocked_keyword(file_name: str) -> str | None:
+    """اگر نام فایل حاوی یکی از کلیدواژه‌های مسدود باشد، همان کلیدواژه را برمی‌گرداند، وگرنه None."""
+    normalized_name = normalize_fa(file_name)
+    for keyword in BLOCKED_KEYWORDS:
+        if normalize_fa(keyword) in normalized_name:
+            return keyword
+    return None
 
 
 # ----------------------------------------------------------------------------
+# اسکن یک کانال (با صفحه‌بندی محدود برای رسیدن به چک‌پوینت قبلی)
 # ----------------------------------------------------------------------------
-def scan_channel(channel: str, last_id: int) -> tuple[list[NpvtFile], int, bool]:
+def scan_channel(channel: str, last_id: int) -> tuple[list[NpvtFile], int, bool, list[tuple[str, str, str]]]:
     """
-    خروجی: (فایل‌های .npvt پیدا‌شده, جدیدترین message_id دیده‌شده, آیا کانال نامعتبر است)
+    خروجی: (فایل‌های .npvt پیدا‌شده, جدیدترین message_id دیده‌شده, آیا کانال نامعتبر است, فایل‌های فیلترشده)
     کانال «نامعتبر» یعنی: صفحه اصلاً واکشی نشد یا هیچ data-post (پیام) در آن پیدا نشد —
     معمولاً به این معناست که کانال وجود ندارد، خصوصی است، یا دسترسی به آن مسدود شده.
+    فایل‌های فیلترشده: (نام فایل, کلیدواژه‌ی مسدودکننده, لینک) — اصلاً به لیست found اضافه نمی‌شوند.
     """
     found: list[NpvtFile] = []
+    filtered: list[tuple[str, str, str]] = []
     newest_id = last_id
     before: int | None = None
     first_page = True
@@ -271,8 +293,15 @@ def scan_channel(channel: str, last_id: int) -> tuple[list[NpvtFile], int, bool]
                 continue
 
             item = extract_npvt_from_node(node, channel, msg_id)
-            if item:
-                found.append(item)
+            if not item:
+                continue
+
+            matched_keyword = find_blocked_keyword(item.file_name)
+            if matched_keyword:
+                filtered.append((item.file_name, matched_keyword, item.link))
+                continue
+
+            found.append(item)
 
         first_page = False
         if not ids_on_page:
@@ -286,7 +315,7 @@ def scan_channel(channel: str, last_id: int) -> tuple[list[NpvtFile], int, bool]
         if page < MAX_PAGES_PER_CHANNEL - 1:
             time.sleep(SLEEP_BETWEEN_PAGES)
 
-    return found, newest_id, invalid
+    return found, newest_id, invalid, filtered
 
 
 # ----------------------------------------------------------------------------
@@ -382,33 +411,27 @@ def update_channel_report(channel_results: list[tuple[str, str]]) -> None:
     logger.info("📊 تاریخچه‌ی کانال‌ها در %s به‌روزرسانی شد.", CHANNEL_REPORT_FILE)
 
 
-def write_invalid_channels(tested_this_run: list[str], invalid_this_run: list[str]) -> None:
-    """
-    چون هر اجرا فقط یک دسته از کانال‌ها را تست می‌کند (نه همه)، این فایل به‌جای
-    بازنویسی کامل، با نتیجهٔ اجراهای قبلی ادغام می‌شود: کانال‌های همین دسته
-    با نتیجهٔ تازه جایگزین می‌شوند و بقیه (که این‌بار تست نشده‌اند) دست‌نخورده
-    باقی می‌مانند.
-    """
-    previous: list[str] = []
-    if INVALID_CHANNELS_FILE.exists():
-        for line in INVALID_CHANNELS_FILE.read_text(encoding="utf-8").splitlines():
-            line = line.strip()
-            if line and not line.startswith("Invalid Telegram Channels"):
-                previous.append(line)
-
-    tested_set = set(tested_this_run)
-    kept = [ch for ch in previous if ch not in tested_set]
-    merged = sorted(set(kept) | set(invalid_this_run))
-
+def write_invalid_channels(invalid_channels: list[str]) -> None:
     INVALID_CHANNELS_FILE.parent.mkdir(parents=True, exist_ok=True)
     with open(INVALID_CHANNELS_FILE, "w", encoding="utf-8") as f:
         f.write(f"Invalid Telegram Channels — {datetime.now(timezone.utc).isoformat()}\n\n")
-        for ch in merged:
+        for ch in sorted(invalid_channels):
             f.write(f"{ch}\n")
 
-    if invalid_this_run:
-        logger.info("📁 %d کانال نامعتبر در این اجرا؛ مجموع فعلی: %d (در %s)",
-                    len(invalid_this_run), len(merged), INVALID_CHANNELS_FILE)
+    if invalid_channels:
+        logger.info("📁 %d کانال نامعتبر در %s ذخیره شد.", len(invalid_channels), INVALID_CHANNELS_FILE)
+
+
+def append_filtered_files(filtered: list[tuple[str, str, str]]) -> None:
+    """هر فایلی که به‌خاطر تطابق با data/blocked_keywords.txt منتشر نشد، اینجا ثبت می‌شود (فقط برای شفافیت)."""
+    if not filtered:
+        return
+    FILTERED_FILES_FILE.parent.mkdir(parents=True, exist_ok=True)
+    with open(FILTERED_FILES_FILE, "a", encoding="utf-8") as f:
+        ts = time.strftime("%Y-%m-%d %H:%M:%S")
+        for file_name, keyword, link in filtered:
+            f.write(f"{ts} | keyword=«{keyword}» | {file_name} | {link}\n")
+    logger.info("🚫 %d فایل به‌خاطر کلیدواژه‌ی مسدود، منتشر نشد (جزئیات در %s).", len(filtered), FILTERED_FILES_FILE)
 
 
 # ----------------------------------------------------------------------------
@@ -423,25 +446,18 @@ def main() -> None:
     if not channels:
         return
 
-    batch, start_idx, next_idx = select_batch(channels)
-    if len(batch) < len(channels):
-        logger.info(
-            "🔁 پردازش دسته‌ای: این اجرا کانال‌های %d تا %d از مجموع %d را بررسی می‌کند "
-            "(اجرای بعدی از کانال %d ادامه می‌دهد).",
-            start_idx + 1, start_idx + len(batch), len(channels), next_idx + 1,
-        )
-
     checkpoints: dict = load_json(CHECKPOINT_FILE, {})
     seen_files: dict = load_json(SEEN_FILES_FILE, {})
 
     all_new: list[NpvtFile] = []
+    all_filtered: list[tuple[str, str, str]] = []  # برای filtered_files.txt
     channel_results: list[tuple[str, str]] = []  # برای channel_report.txt
     invalid_channels: list[str] = []              # برای invalid_channels.txt
 
-    for idx, ch in enumerate(batch, 1):
-        logger.info("📡 [%d/%d] بررسی کانال: %s", idx, len(batch), ch)
+    for idx, ch in enumerate(channels, 1):
+        logger.info("📡 [%d/%d] بررسی کانال: %s", idx, len(channels), ch)
         last_id = checkpoints.get(ch, 0)
-        found, newest_id, invalid = scan_channel(ch, last_id)
+        found, newest_id, invalid, filtered = scan_channel(ch, last_id)
 
         if invalid:
             logger.warning("   ↳ ⚠️ کانال نامعتبر یا غیرقابل‌دسترسی (وجود ندارد/خصوصی/مسدود).")
@@ -452,13 +468,16 @@ def main() -> None:
                 logger.info("   ↳ %d فایل .npvt جدید پیدا شد.", len(found))
             else:
                 logger.info("   ↳ فایل .npvt جدیدی پیدا نشد.")
+            if filtered:
+                logger.info("   ↳ 🚫 %d فایل به‌خاطر کلیدواژه‌ی مسدود نادیده گرفته شد.", len(filtered))
             channel_results.append((ch, str(len(found))))
 
         if newest_id:
             checkpoints[ch] = max(newest_id, last_id)
 
         all_new.extend(found)
-        if idx < len(batch):
+        all_filtered.extend(filtered)
+        if idx < len(channels):
             time.sleep(SLEEP_BETWEEN_CHANNELS)
 
     # ---- گام ۱: حذف تکراری‌های داخل همین اجرا (اولین موردِ هر نام+حجم می‌ماند) ----
@@ -534,9 +553,8 @@ def main() -> None:
     save_json(SEEN_FILES_FILE, seen_files)
     save_json(PENDING_FILE, {key: item.to_dict() for key, item in leftover.items()})
     update_channel_report(channel_results)
-    write_invalid_channels(tested_this_run=batch, invalid_this_run=invalid_channels)
-    if len(batch) < len(channels):
-        save_cursor(next_idx)
+    write_invalid_channels(invalid_channels)
+    append_filtered_files(all_filtered)
 
     REPORT_FILE.parent.mkdir(parents=True, exist_ok=True)
     with open(REPORT_FILE, "a", encoding="utf-8") as f:
@@ -544,12 +562,14 @@ def main() -> None:
             f"{time.strftime('%Y-%m-%d %H:%M:%S')} | found={len(all_new)} "
             f"duplicates={duplicate_in_batch} already_sent={already_sent} "
             f"attempted={len(attempt_now)} sent={sent} failed={failed} "
-            f"pending_queue={len(leftover)} invalid_channels={len(invalid_channels)}\n"
+            f"pending_queue={len(leftover)} filtered={len(all_filtered)} "
+            f"invalid_channels={len(invalid_channels)}\n"
         )
 
     logger.info(
-        "✅ پایان اجرا. ارسال‌شده: %d | ناموفق (در صف ماند): %d | در انتظار کل: %d | کانال نامعتبر: %d",
-        sent, failed, len(leftover), len(invalid_channels),
+        "✅ پایان اجرا. ارسال‌شده: %d | ناموفق (در صف ماند): %d | در انتظار کل: %d | "
+        "فیلترشده: %d | کانال نامعتبر: %d",
+        sent, failed, len(leftover), len(all_filtered), len(invalid_channels),
     )
 
 

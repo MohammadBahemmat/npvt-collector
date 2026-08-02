@@ -1,0 +1,1 @@
+2026-08-02 06:50:12 | found=1 duplicates=0 already_sent=0 attempted=1 sent=1 failed=0 pending_queue=0 invalid_channels=8

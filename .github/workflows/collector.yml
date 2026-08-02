@@ -10,7 +10,11 @@ concurrency:
 jobs:
   collect:
     runs-on: ubuntu-latest
-    timeout-minutes: 100
+    # توجه: timeout-minutes به‌عمد از این‌جا حذف شده تا اجرای طولانی (مثلاً
+    # وقتی صف ارسال بزرگ است یا محدودیت نرخ تلگرام پیش می‌آید) کشته نشود.
+    # با این حال، خودِ GitHub Actions یک سقف مطلق و غیرقابل‌دورزدن ۳۶۰ دقیقه‌ای
+    # (۶ ساعت) روی هر Job اعمال می‌کند؛ این محدودیت پلتفرم است، نه چیزی که
+    # ما تعریف کرده باشیم، و از طریق تنظیمات این پروژه قابل حذف نیست.
     permissions:
       contents: write
 
@@ -34,7 +38,7 @@ jobs:
         run: python src/npvt_collector.py
 
       - name: Commit and push updated state
-        timeout-minutes: 15
+        timeout-minutes: 60
         continue-on-error: true
         run: |
           git config user.name "GitHub Actions Bot"

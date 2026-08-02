@@ -131,7 +131,12 @@
 <tr><td><code>MAX_PAGES_PER_CHANNEL</code></td><td><code>3</code></td><td>حداکثر تعداد صفحه‌ی عقب‌گرد (<code>?before=</code>) برای رسیدن به چک‌پوینت قبلی</td></tr>
 <tr><td><code>SLEEP_BETWEEN_CHANNELS</code></td><td><code>1.5</code></td><td>تاخیر (ثانیه) بین بررسی کانال‌ها</td></tr>
 <tr><td><code>SLEEP_BETWEEN_PAGES</code></td><td><code>1</code></td><td>تاخیر (ثانیه) بین صفحات یک کانال</td></tr>
-<tr><td><code>SLEEP_BETWEEN_SENDS</code></td><td><code>1.5</code></td><td>تاخیر (ثانیه) بین ارسال پیام‌ها به بات</td></tr>
+<tr><td><code>SLEEP_BETWEEN_SENDS</code></td><td><code>3.5</code></td><td>تاخیر (ثانیه) بین ارسال پیام‌ها به بات — برای ماندن زیر سقف ~۲۰ پیام در دقیقه‌ی تلگرام</td></tr>
+<tr><td><code>REQUEST_TIMEOUT</code></td><td><code>10</code></td><td>حداکثر زمان انتظار (ثانیه) برای هر درخواست HTTP قبل از شکست خوردن</td></tr>
+<tr><td><code>CHANNELS_PER_RUN</code></td><td><code>15</code></td><td>تعداد کانالی که <strong>هر اجرا</strong> بررسی می‌کند (نه لزوماً همه)؛ اجرای بعدی به‌صورت چرخشی از همان‌جا ادامه می‌دهد. <code>0</code> یعنی همه‌ی کانال‌ها در یک اجرا (فقط برای لیست‌های کوتاه توصیه می‌شود)</td></tr>
+<tr><td><code>MAX_SEND_RETRIES</code></td><td><code>6</code></td><td>حداکثر تعداد تلاش دوباره برای ارسال یک پیام، وقتی تلگرام خطای 429 (محدودیت نرخ) برمی‌گرداند</td></tr>
+<tr><td><code>MAX_RETRY_AFTER_WAIT</code></td><td><code>90</code></td><td>حداکثر زمانی (ثانیه) که برای هر تلاش دوباره صبر می‌شود، حتی اگر تلگرام عدد بزرگ‌تری بخواهد</td></tr>
+<tr><td><code>MAX_SENDS_PER_RUN</code></td><td><code>40</code></td><td>حداکثر تعداد پیامی که <strong>هر اجرا</strong> تلاش می‌کند ارسال کند؛ باقی در <code>data/pending_send.json</code> برای اجرای بعدی می‌مانند</td></tr>
 </tbody>
 </table>
 
@@ -196,6 +201,7 @@ cd npvt-collector</pre>
 <ul>
 <li>اگر یک اجرا با خطا متوقف شود (مثلاً مشکل شبکه یا Rate Limit)، مرحله‌ی «Trigger next run» اجرا نمی‌شود و زنجیره کاملاً <strong>متوقف</strong> می‌شود؛ برای ادامه باید یک‌بار دیگر دستی از تب Actions اجرا (<strong>Run workflow</strong>) بزنید.</li>
 <li>چون هر اجرا بلافاصله اجرای بعدی را صدا می‌زند (بدون فاصله‌ی زمانی)، در مخزن‌های <strong>Private</strong>، سهمیه‌ی رایگان دقیقه‌های GitHub Actions (معمولاً ۲۰۰۰ دقیقه در ماه) می‌تواند سریع‌تر از یک زمان‌بندی ساعتی مصرف شود. برای کنترل این موضوع، مقادیر <code>SLEEP_BETWEEN_CHANNELS</code>، <code>SLEEP_BETWEEN_PAGES</code> و <code>SLEEP_BETWEEN_SENDS</code> در <code>config/.env.example</code> را می‌توانید بیشتر کنید تا هر اجرا کمی طولانی‌تر و با فاصله‌ی بیشتری تکرار شود، یا در صورت تمایل، خط <code>on: workflow_dispatch</code> را به یک <code>schedule: cron</code> ساده (مثلاً هر ۱۰ دقیقه) تغییر دهید تا به‌جای زنجیره‌ی پیوسته، با فاصله‌ی منظم اجرا شود.</li>
+<li><strong>پردازش دسته‌ای برای جلوگیری از Timeout:</strong> برای اینکه یک لیست بلند از کانال‌ها (یا اولین اجرا، وقتی هنوز چک‌پوینتی وجود ندارد) باعث نشود کل Job از سقف زمانی (<code>timeout-minutes: 20</code>) رد شود، هر اجرا فقط <code>CHANNELS_PER_RUN</code> کانال (پیش‌فرض ۱۵ تا) را بررسی می‌کند و اجرای بعدی به‌صورت چرخشی از همان کانال بعدی ادامه می‌دهد — پیشرفت این چرخش در <code>data/channel_cursor.json</code> ذخیره می‌شود.</li>
 </ul>
 </div>
 
@@ -206,7 +212,7 @@ cd npvt-collector</pre>
 <p>پس از هر اجرا، دو فایل زیر در <code>data/</code> به‌روزرسانی می‌شوند:</p>
 <ul>
     <li><code>channel_report.txt</code> — به ازای هر کانال، تاریخچه‌ی تعداد فایل <code>.npvt</code> پیدا‌شده در هر اجرا را (به ترتیب، جدا شده با کاما) نشان می‌دهد؛ مثلاً <code>napsternetv_file: 2, 0, 1</code> یعنی در سه اجرای اخیر، به ترتیب ۲، ۰ و ۱ فایل جدید پیدا شده است.</li>
-    <li><code>invalid_channels.txt</code> — فهرست کانال‌هایی که در آخرین اجرا اصلاً قابل خواندن نبودند (کانال وجود ندارد، خصوصی است، یا مسدود شده). در <code>channel_report.txt</code> هم این کانال‌ها با مقدار <code>ERR</code> مشخص می‌شوند.</li>
+    <li><code>invalid_channels.txt</code> — فهرست به‌روزِ کانال‌هایی که آخرین‌باری که تست شدند قابل خواندن نبودند (کانال وجود ندارد، خصوصی است، یا مسدود شده). چون هر اجرا فقط بخشی از کانال‌ها را تست می‌کند، این فهرست بین اجراها با نتیجهٔ تازه ادغام می‌شود، نه بازنویسی کامل. در <code>channel_report.txt</code> هم این کانال‌ها با مقدار <code>ERR</code> مشخص می‌شوند.</li>
 </ul>
 
 <img src="line.gif" alt="separator" style="display: block; margin: 30px auto;" />
@@ -230,7 +236,9 @@ cd npvt-collector</pre>
 ├── data/                          # فایل‌های داده و گزارش‌ها
 │   ├── channels.txt               # فهرست کانال‌های تلگرام (ورودی)
 │   ├── last_message_id.json       # (تولیدشده) آخرین message_id بررسی‌شده هر کانال
+│   ├── channel_cursor.json        # (تولیدشده) نقطه‌ی ادامه‌ی چرخش دسته‌ای کانال‌ها
 │   ├── seen_files.json            # (تولیدشده) آرشیو فایل‌های قبلاً ارسال‌شده (نام+حجم)
+│   ├── pending_send.json          # (تولیدشده) صف فایل‌هایی که هنوز ارسال نشده‌اند
 │   ├── npvt_report.txt            # (تولیدشده) گزارش خلاصه‌ی هر اجرا
 │   ├── channel_report.txt         # (تولیدشده) تاریخچه‌ی تعداد فایل یافت‌شده به ازای هر کانال
 │   └── invalid_channels.txt       # (تولیدشده) کانال‌های نامعتبر/غیرقابل‌دسترسی در آخرین اجرا
@@ -289,6 +297,23 @@ cd npvt-collector</pre>
 <ul>
     <li>بررسی کنید که مرحلهٔ <code>Commit and push updated state</code> در Workflow بدون خطا اجرا شده باشد.</li>
     <li>مطمئن شوید <code>permissions: contents: write</code> در فایل <code>collector.yml</code> حذف نشده باشد.</li>
+</ul>
+</details>
+
+<details>
+<summary><strong>در لاگ زیاد خطای <code>429 Too Many Requests</code> می‌بینم</strong></summary>
+<ul>
+    <li>این یعنی تلگرام سرعت ارسال پیام‌های بات به کانال مقصد را محدود کرده (تقریباً سقف ۲۰ پیام در دقیقه به هر چت). این خطا اکنون به‌طور خودکار مدیریت می‌شود: اسکریپت دقیقاً به‌اندازه‌ی <code>retry_after</code> اعلام‌شده توسط تلگرام صبر و دوباره تلاش می‌کند (تا <code>MAX_SEND_RETRIES</code> بار).</li>
+    <li>اگر پس از همه‌ی تلاش‌ها هم ارسال نشود، پیام <strong>گم نمی‌شود</strong> — در <code>data/pending_send.json</code> ذخیره و در اجرای بعدی دوباره امتحان می‌شود.</li>
+    <li>اگر این خطا زیاد تکرار می‌شود، مقدار <code>SLEEP_BETWEEN_SENDS</code> را (مثلاً به ۵) افزایش دهید یا <code>MAX_SENDS_PER_RUN</code> را کاهش دهید تا فشار کمتری روی هر اجرا باشد.</li>
+</ul>
+</details>
+
+<details>
+<summary><strong>خطای «The job has exceeded the maximum execution time»</strong></summary>
+<ul>
+    <li>این پروژه دیگر سقف زمانی خودش را روی Job تعریف نمی‌کند (<code>timeout-minutes</code> عمداً از <code>collector.yml</code> حذف شده)، پس اجرا به‌خاطر تنظیمات این پروژه متوقف نمی‌شود.</li>
+    <li>با این حال، خودِ GitHub Actions یک سقف مطلق <strong>۳۶۰ دقیقه‌ای (۶ ساعت)</strong> روی هر Job اعمال می‌کند که قابل‌دور زدن نیست — این محدودیت پلتفرم گیت‌هاب است. اگر به این سقف رسیدید، معمولاً نشانه‌ی این است که تعداد کانال‌ها یا حجم صف ارسال بسیار زیاد شده؛ <code>CHANNELS_PER_RUN</code> و <code>MAX_SENDS_PER_RUN</code> را کاهش دهید تا هر اجرا سریع‌تر تمام شود (کارِ باقی‌مانده خودکار به اجرای بعدی منتقل می‌شود).</li>
 </ul>
 </details>
 

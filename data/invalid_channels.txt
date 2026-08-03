@@ -1,4 +1,4 @@
-Invalid Telegram Channels — 2026-08-03T13:51:33.835921+00:00
+Invalid Telegram Channels — 2026-08-03T14:29:04.861390+00:00
 
 +jtinm8-guq41otji
 Cov2ray
@@ -320,7 +320,6 @@ yeganeh_vpn
 yoshisb
 youtube_vpn
 ytte3la
-zahra_vpn
 zendegi_vpn
 zero_vpn
 zhila_vpn

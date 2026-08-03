@@ -1,4 +1,4 @@
-Invalid Telegram Channels — 2026-08-03T14:29:04.861390+00:00
+Invalid Telegram Channels — 2026-08-03T15:07:14.307442+00:00
 
 +jtinm8-guq41otji
 Cov2ray
@@ -114,6 +114,7 @@ ip_cf_config
 iproxy_meli
 iran_vpn
 iranvpn_ads
+isegaro
 jadi_vpn
 javid_vpn
 joker_vpn
@@ -238,6 +239,7 @@ serveretbot
 serveriran11
 servermomo
 sevenenetbot
+shabrangvpn
 shadowlinkserverr
 shahin_vpn
 shaxhabb
@@ -320,6 +322,7 @@ yeganeh_vpn
 yoshisb
 youtube_vpn
 ytte3la
+zara_vpn
 zendegi_vpn
 zero_vpn
 zhila_vpn

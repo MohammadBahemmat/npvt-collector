@@ -1,4 +1,4 @@
-Invalid Telegram Channels — 2026-08-03T12:35:03.820695+00:00
+Invalid Telegram Channels — 2026-08-03T13:13:52.611301+00:00
 
 +jtinm8-guq41otji
 Cov2ray
@@ -7,6 +7,7 @@ FAKEOFTVC
 MrV2Ray
 ProxyForOpeta
 Qv2rayDONATED
+ablnet7
 accountcentre_cshop
 ads_config
 alaedinrobot
@@ -37,6 +38,7 @@ buyvpn_sup
 buyvpnrbot
 cactusvpn
 canfigiop
+caspian_vpn
 chat_nakone
 chatnakonn
 chatnakonvaslshimdark
@@ -72,7 +74,6 @@ falcon_vpn
 farasellbot
 farman_vpn
 faryar_vpn
-fastnettools
 fire_vpn
 flash_vpn
 fly_vpn
@@ -264,7 +265,6 @@ taktaztambot
 taraz_vpn
 teamkingo
 telegram_vpn
-telpj
 themecherie
 thunder_vpn
 tiger_vpn
@@ -282,9 +282,7 @@ turbo_vpn
 turbonetshop_bot
 tweetycp
 ultra_vpn
-v2_team
 v2_vmess
-v2fres
 v2ray443_support
 v2ray_freedomiran
 v2ray_v_vpn

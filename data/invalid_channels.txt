@@ -1,4 +1,4 @@
-Invalid Telegram Channels — 2026-08-03T11:19:13.273618+00:00
+Invalid Telegram Channels — 2026-08-03T12:35:03.820695+00:00
 
 +jtinm8-guq41otji
 Cov2ray
@@ -72,6 +72,7 @@ falcon_vpn
 farasellbot
 farman_vpn
 faryar_vpn
+fastnettools
 fire_vpn
 flash_vpn
 fly_vpn
@@ -123,7 +124,6 @@ kouroshvipvpnbot
 kurdistan_vpn_perfectt
 l_agvpn13
 letsproxys1
-lightning6
 lion_vpn
 liznetworkbot
 lord_ul4mo
@@ -168,7 +168,6 @@ neo_vpn
 net_vpn
 nftdaklin0
 ngconfigbot
-niaz_vpn
 nice_vpn
 nim_vpn
 nina_vpn
@@ -264,8 +263,8 @@ taha_vpn
 taktaztambot
 taraz_vpn
 teamkingo
-techbod
 telegram_vpn
+telpj
 themecherie
 thunder_vpn
 tiger_vpn
@@ -276,7 +275,6 @@ tntplus_vpn
 tornado_vpn
 total_vpn
 tradenets_sup
-trend_vpn
 tsteam_support
 tsteamshopbot
 tunnel_vpn
@@ -284,7 +282,9 @@ turbo_vpn
 turbonetshop_bot
 tweetycp
 ultra_vpn
+v2_team
 v2_vmess
+v2fres
 v2ray443_support
 v2ray_freedomiran
 v2ray_v_vpn
@@ -294,7 +294,6 @@ v2rayng_config_amin
 v2rayng_org
 v2rayng_vpnrog
 v2rayngg_iran
-v2rayngmat
 v2rayoxygen
 v2raysfree
 vahid_vpn

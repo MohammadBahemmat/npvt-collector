@@ -1,4 +1,4 @@
-Invalid Telegram Channels — 2026-08-03T15:44:56.834197+00:00
+Invalid Telegram Channels — 2026-08-03T16:19:05.766796+00:00
 
 +jtinm8-guq41otji
 Cov2ray
@@ -69,6 +69,7 @@ erfeee
 esmail_vpn
 exonac_bot
 falcon_vpn
+farah_vpn
 farasellbot
 farman_vpn
 faryar_vpn
@@ -255,7 +256,6 @@ spider_vpn
 ssigma_vpn
 star_vpn
 storm_vpn
-subioir
 super_vpn
 surf_vpn
 sweet_vpn
@@ -313,11 +313,11 @@ vpnisco_v2ray_bot
 vpnitbot
 vpnmasi
 vpnqavi
-vpnshup
 vpnxshop_bot
 windexpressir_bot
 winternetshop_bot
 ws_arien
+xsv2ray
 yeganeh_vpn
 yoshisb
 youtube_vpn

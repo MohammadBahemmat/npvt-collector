@@ -168,6 +168,7 @@ neo_vpn
 net_vpn
 nftdaklin0
 ngconfigbot
+niaz_vpn
 nice_vpn
 nim_vpn
 nina_vpn
@@ -263,6 +264,7 @@ taha_vpn
 taktaztambot
 taraz_vpn
 teamkingo
+techbod
 telegram_vpn
 themecherie
 thunder_vpn
@@ -274,6 +276,7 @@ tntplus_vpn
 tornado_vpn
 total_vpn
 tradenets_sup
+trend_vpn
 tsteam_support
 tsteamshopbot
 tunnel_vpn

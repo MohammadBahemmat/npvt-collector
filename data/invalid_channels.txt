@@ -1,4 +1,4 @@
-Invalid Telegram Channels — 2026-08-03T13:13:52.611301+00:00
+Invalid Telegram Channels — 2026-08-03T13:51:33.835921+00:00
 
 +jtinm8-guq41otji
 Cov2ray
@@ -7,7 +7,6 @@ FAKEOFTVC
 MrV2Ray
 ProxyForOpeta
 Qv2rayDONATED
-ablnet7
 accountcentre_cshop
 ads_config
 alaedinrobot
@@ -38,7 +37,6 @@ buyvpn_sup
 buyvpnrbot
 cactusvpn
 canfigiop
-caspian_vpn
 chat_nakone
 chatnakonn
 chatnakonvaslshimdark
@@ -322,6 +320,7 @@ yeganeh_vpn
 yoshisb
 youtube_vpn
 ytte3la
+zahra_vpn
 zendegi_vpn
 zero_vpn
 zhila_vpn

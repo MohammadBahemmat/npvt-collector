@@ -1,4 +1,4 @@
-Invalid Telegram Channels — 2026-08-04T13:30:41.386018+00:00
+Invalid Telegram Channels — 2026-08-04T15:16:47.936739+00:00
 
 +jtinm8-guq41otji
 104
@@ -102,13 +102,9 @@ arminzlox
 arovpn_bot
 arshia_vpn
 arva_landbot
-arvand_soul
 arya_vpn
-aryan_vpn
 ashiiism
 aspamirvpnpstw
-asrerap1
-astro_server
 atapli
 atrapj
 av2raybot
@@ -462,6 +458,7 @@ httpcustomland
 https_config_injector
 hupmmd
 hxconfused
+hyper_confing
 hyper_vpn31
 hypervpnrobot
 iam_ac

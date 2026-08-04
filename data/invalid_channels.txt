@@ -1,4 +1,4 @@
-Invalid Telegram Channels — 2026-08-04T15:16:47.936739+00:00
+Invalid Telegram Channels — 2026-08-04T17:02:54.920350+00:00
 
 +jtinm8-guq41otji
 104
@@ -458,7 +458,6 @@ httpcustomland
 https_config_injector
 hupmmd
 hxconfused
-hyper_confing
 hyper_vpn31
 hypervpnrobot
 iam_ac

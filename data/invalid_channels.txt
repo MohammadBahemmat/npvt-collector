@@ -1,4 +1,4 @@
-Invalid Telegram Channels — 2026-08-04T18:40:33.219998+00:00
+Invalid Telegram Channels — 2026-08-04T20:22:09.539285+00:00
 
 +jtinm8-guq41otji
 104
@@ -279,7 +279,6 @@ dr_news2
 dr_vpn
 dragon_vpn
 drillcitygp
-drovone
 drping
 drvpn7
 drwithcobra1_hiphopologist
@@ -1001,6 +1000,7 @@ siassatmadar110
 siassatmadar111
 siassatmadar15
 signal_vpn
+sikimsportz
 sikmsportz2
 sil3nt_chatroom
 sil3nt_network1
@@ -1277,6 +1277,7 @@ vpnod____vipall7
 vpnqavi
 vpnsway
 vpnwolfconfig
+vpnx44
 vpnxshop_bot
 vrshekan_bot
 vsle

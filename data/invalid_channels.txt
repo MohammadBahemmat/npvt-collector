@@ -1,4 +1,4 @@
-Invalid Telegram Channels — 2026-08-04T20:22:09.539285+00:00
+Invalid Telegram Channels — 2026-08-04T22:31:12.886606+00:00
 
 +jtinm8-guq41otji
 104
@@ -43,12 +43,14 @@ adnovashopnet
 ads_central_net
 ads_config
 afloke
+aghayapple
 ahmadreza4_shz
 ahmadreza_zr5
 ahura_net
 ai_pro_center_bot
 aioxp
 airusdfbot
+akhbare2025
 alaedinrobot
 alarm_timee
 ali_midnight
@@ -114,6 +116,7 @@ aylyahnramwz
 azadbirdbot
 azadboy
 azadeh_support
+azadi_az_inja_migzare
 azdeltaghalam
 azirproxybot
 b_vpn_free
@@ -778,6 +781,7 @@ nzeeee85
 oborv2ray
 oborv2ray1
 oborv2ray9
+offnot
 ogsvpnbot
 ojan_vpn
 okbikhiial
@@ -870,6 +874,7 @@ proxynet4
 proxypr
 proxystrong_hb
 proxysuperm
+proxytmproxy
 proxyxix
 proxyy_1404
 psargo
@@ -1000,7 +1005,6 @@ siassatmadar110
 siassatmadar111
 siassatmadar15
 signal_vpn
-sikimsportz
 sikmsportz2
 sil3nt_chatroom
 sil3nt_network1
@@ -1277,7 +1281,6 @@ vpnod____vipall7
 vpnqavi
 vpnsway
 vpnwolfconfig
-vpnx44
 vpnxshop_bot
 vrshekan_bot
 vsle

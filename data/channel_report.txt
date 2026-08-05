@@ -1,147 +1,147 @@
-NPVT Channel Report — last update: 2026-08-05T16:54:41.473927+00:00
+NPVT Channel Report — last update: 2026-08-05T17:03:07.704743+00:00
 
 NPVT Channel Report — last update: 2026-08-05T16:06:21.955199+00:00
-ada_free_connect: 1, 0, 0, 0, 0, 0, 0
-anonymouskeys: 35, 0, 0, 0, 0, 0, 1
-anty_filter: 9, 0, 0, 0, 0, 0, 0
-argo_vpnn: 35, 0, 0, 0, 0, 0, 0
-azadinternet_tv: 42, 0, 0, 0, 0, 0, 0
-azdeltaghalam7: 5, 0, 0, 0, 0, 0, 0
-blackray: 30, 0, 0, 0, 0, 0, 0
-broz_time: 56, 0, 0, 0, 0, 0, 0
-capoit: 4, 0, 0, 0, 0, 0, 0
-config_fre: 8, 0, 0, 0, 0, 0, 0
-config_magazine: 27, 0, 0, 0, 0, 0, 0
-configir98: 31, 0, 0, 0, 0, 0, 0
-configpluse: 12, 0, 0, 0, 0, 0, 0
-configraygan: 6, 0, 0, 0, 0, 0, 0
-configshub: 12, 0, 0, 14, 3, 13, 7
-configx2ray: 37, 0, 0, 0, 0, 0, 0
-confiig_connect: 14, 0, 0, 0, 0, 0, 0
-confing_proxi1: 12, 0, 0, 0, 0, 0, 0
-cooonfig: 55, 0, 0, 0, 0, 0, 1
-cpy_teel: 4, 0, 0, 0, 0, 0, 0
-dalton_ping: 40, 0, 0, 0, 0, 0, 0
-dns_amir: ERR, ERR, ERR, ERR, ERR, ERR, ERR
-e404tech: 13, 0, 0, 0, 0, 0, 0
-eliv2ray: 47, 0, 0, 0, 0, 0, 0
-farsiproxi: 14, 0, 0, 0, 0, 0, 0
-fast_conect0: 18, 1, 1, 0, 0, 0, 0
-fastnettools: 31, 0, 0, 0, 0, 0, 0
-filtershekan_channel: 24, 0, 0, 0, 0, 0, 0
-flyv2ray: 32, 0, 0, 0, 0, 0, 0
-free1_vpn: 3, 0, 0, 0, 0, 0, 0
-freeland8: 6, 0, 0, 0, 0, 0, 0
-g0dv2ray: 46, 0, 0, 0, 0, 0, 0
-gargabil: 13, 0, 0, 0, 0, 0, 0
-ghalagyann: 60, 0, 0, 0, 0, 0, 0
-ghalagyann2: 60, 0, 0, 0, 0, 0, 0
-ghoflshcan: 30, 0, 0, 0, 0, 0, 0
-gozargahazad: 8, 0, 0, 14, 3, 13, 10
-harfbzaniiim: 11, 0, 0, 0, 0, 0, 0
-hddify: 40, 0, 0, 0, 0, 0, 0
-heartdebt: 0, 0, 0, 0, 0, 0, 0
-hex_proxy: 25, 0, 0, 0, 0, 0, 0
-hi_proxy_iran: 15, 0, 0, 0, 0, 0, 0
-hiddify_nexttt: 36, 0, 0, 0, 0, 0, 0
-icv2ray: 29, 0, 0, 0, 1, 0, 0
-iiproxyiran: 54, 0, 0, 0, 0, 0, 0
-infotech_vk: 6, 0, 0, 0, 0, 0, 0
-ipv2ray: 53, 0, 0, 0, 0, 0, 0
-iranconnecting: 30, 0, 0, 0, 0, 0, 0
-iranvasll: 1, 0, 0, 0, 0, 0, 0
-irv2rey: 17, 0, 0, 0, 0, 0, 0
-jkvpn: 24, 0, 0, 0, 0, 0, 0
-jynmarket: 22, 0, 0, 0, 0, 0, 0
-kamkarstore: 11, 0, 0, 0, 0, 0, 0
-kurdconfing: 17, 0, 0, 0, 0, 0, 0
-marambashi: 12, 0, 0, 0, 0, 0, 0
-maramivpn: 7, 0, 0, 0, 0, 0, 0
-masster_vpn: 39, 0, 0, 0, 0, 0, 0
-maznet: 26, 0, 0, 0, 0, 0, 0
-mellinet_npv: 44, 0, 0, 0, 0, 0, 0
-merlin_vip: 2, 0, 0, 0, 0, 0, 0
-mitivpn: 39, 0, 0, 0, 0, 0, 0
-moft_vpn: 48, 0, 0, 0, 0, 0, 0
-mtmvpn: 8, 0, 0, 0, 0, 0, 0
-musiclovers85: 1, 0, 0, 0, 0, 0, 0
-mymoon_81: 1, 0, 0, 0, 0, 0, 0
-napsternet_confing1: 38, 0, 0, 0, 0, 0, 0
-net2proxy: 24, 0, 0, 0, 0, 0, 0
-netnewz: 31, 0, 0, 0, 0, 0, 0
-nftvici: 1, 0, 0, 0, 0, 0, 0
-nitrustore: 20, 0, 0, 0, 0, 0, 0
-npv_tunnela: 40, 0, 0, 0, 0, 0, 0
-npv_tunnelorg: 20, 0, 0, 0, 0, 0, 0
-npvfreeall: 42, 0, 0, 0, 0, 0, 0
-npvtunel: 46, 0, 0, 0, 0, 0, 0
-npvv2rayfilter: 45, 0, 0, 0, 0, 0, 0
-persianvpnhub: 0, 0, 0, 0, 0, 0, 0
-pewezatech: 2, 0, 0, 0, 0, 0, 0
-proxy_badss: 1, 0, 0, 0, 0, 0, 0
-proxy_kafee: 8, 0, 0, 0, 0, 0, 0
-proxy_mtm: 8, 0, 0, 0, 0, 0, 0
-proxypj: 8, 0, 0, 0, 0, 0, 0
-proxysnipe: 44, 0, 0, 0, 0, 0, 0
-proxystore11: 15, 0, 0, 0, 0, 0, 0
-proxyzeno: 31, 1, 0, 0, 0, 0, 0
-rk_vps: 27, 0, 0, 0, 0, 0, 0
-server01012: 39, 0, 0, 0, 0, 0, 0
-servernett: 26, 0, 0, 0, 0, 0, 0
-serverstm: 39, 0, 0, 0, 0, 0, 0
-shadowproxy66: 3, 0, 0, 0, 0, 0, 0
-shh_proxy: 42, 0, 0, 0, 0, 0, 0
-sil3nt_network: 13, 0, 0, 0, 0, 0, 0
-sinavm: 17, 0, 0, 0, 0, 0, 0
-singbox1: 10, 0, 0, 0, 0, 0, 0
-sorenab2: 7, 3, 0, 0, 10, 2, 0
-srcvpn: 46, 0, 0, 0, 0, 0, 0
-tasiyanc: 6, 0, 0, 0, 0, 0, 0
-taziyanteam: 14, 0, 0, 0, 0, 0, 0
-tel_melli: 58, 0, 0, 0, 0, 0, 0
-telpj: 8, 0, 0, 0, 0, 0, 0
-thephantom_net: 22, 0, 0, 0, 0, 0, 0
-tweety_proxy: 14, 0, 0, 0, 0, 0, 0
-uinqvpn: 30, 0, 0, 0, 0, 0, 0
-unlimitconfig: 1, 1, 0, 0, 0, 0, 0
-unlimiteddev: 28, 0, 0, 0, 0, 0, 0
-v2dogs_n: 7, 0, 0, 0, 0, 0, 0
-v2hubir: 7, 0, 0, 0, 1, 0, 0
-v2proxypvn: 36, 0, 0, 0, 0, 0, 0
-v2ray1_ng: 1, 0, 0, 0, 0, 0, 0
-v2ray_alpha: 41, 0, 0, 0, 0, 0, 0
-v2ray_confing33: 11, 0, 0, 0, 0, 0, 0
-v2ray_official: 34, 0, 0, 0, 0, 0, 0
-v2ray_vpn_ir: 11, 0, 0, 0, 0, 0, 0
-v2rayenglish: 44, 0, 0, 0, 0, 0, 0
-v2raymelliii: 21, 0, 0, 0, 0, 0, 1
-v2rayng405: 7, 0, 0, 0, 0, 0, 0
-v2rayng_cafe: 43, 0, 0, 0, 0, 0, 0
-v2rayng_fars: 2, 0, 0, 0, 0, 0, 0
-v2rayngcloud: 19, 0, 0, 0, 0, 0, 0
-v2rayngvpn: 56, 0, 0, 0, 0, 0, 1
-v2rayroom: 3, 0, 0, 0, 0, 0, 0
-v2raytun0: 19, 0, 0, 0, 0, 0, 0
-v2rayyngvpn: 4, 0, 0, 0, 0, 0, 0
-vasl_bashim: 10, 0, 0, 0, 0, 0, 0
-vipv2rayngnp: 40, 1, 0, 0, 0, 0, 0
-vlinews: 1, 0, 0, 0, 0, 0, 0
-vmessorg: 39, 0, 0, 0, 0, 0, 0
-voxvpnonline: 25, 0, 0, 0, 0, 0, 0
-vpn_click: 15, 0, 0, 0, 0, 0, 0
-vpn_hubtm: 54, 1, 0, 0, 0, 0, 0
-vpn_shield: 6, 0, 0, 0, 0, 0, 0
-vpn_solve: 13, 0, 0, 0, 0, 0, 0
-vpnbaz: 9, 0, 0, 0, 0, 0, 0
-vpncustomize: 23, 0, 0, 0, 0, 0, 0
-vpnferi: 42, 0, 0, 0, 0, 0, 0
-vpnfredom: 25, 0, 0, 0, 0, 0, 0
-vpnparsajo: 3, 0, 0, 0, 0, 0, 0
-vpnx44: 13, 0, 0, 0, 0, 0, 0
-wedbaztel: 6, 0, 0, 0, 0, 0, 0
-xpnteam: 26, 0, 0, 0, 0, 0, 0
-xtodayz: 1, 0, 0, 0, 0, 0, 0
-xv2ray: 60, 0, 0, 0, 0, 0, 0
-y2knistam: 5, 0, 0, 0, 0, 0, 0
-zero_tunnel: 3, 0, 0, 0, 0, 0, 0
-znetai: 15, 0, 0, 0, 0, 0, 0
+ada_free_connect: 1, 0, 0, 0, 0, 0, 0, 0
+anonymouskeys: 35, 0, 0, 0, 0, 0, 1, 0
+anty_filter: 9, 0, 0, 0, 0, 0, 0, 0
+argo_vpnn: 35, 0, 0, 0, 0, 0, 0, 0
+azadinternet_tv: 42, 0, 0, 0, 0, 0, 0, 0
+azdeltaghalam7: 5, 0, 0, 0, 0, 0, 0, 0
+blackray: 30, 0, 0, 0, 0, 0, 0, 0
+broz_time: 56, 0, 0, 0, 0, 0, 0, 1
+capoit: 4, 0, 0, 0, 0, 0, 0, 0
+config_fre: 8, 0, 0, 0, 0, 0, 0, 0
+config_magazine: 27, 0, 0, 0, 0, 0, 0, 0
+configir98: 31, 0, 0, 0, 0, 0, 0, 0
+configpluse: 12, 0, 0, 0, 0, 0, 0, 0
+configraygan: 6, 0, 0, 0, 0, 0, 0, 0
+configshub: 12, 0, 0, 14, 3, 13, 7, 3
+configx2ray: 37, 0, 0, 0, 0, 0, 0, 0
+confiig_connect: 14, 0, 0, 0, 0, 0, 0, 0
+confing_proxi1: 12, 0, 0, 0, 0, 0, 0, 0
+cooonfig: 55, 0, 0, 0, 0, 0, 1, 0
+cpy_teel: 4, 0, 0, 0, 0, 0, 0, 0
+dalton_ping: 40, 0, 0, 0, 0, 0, 0, 0
+dns_amir: ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR
+e404tech: 13, 0, 0, 0, 0, 0, 0, 0
+eliv2ray: 47, 0, 0, 0, 0, 0, 0, 0
+farsiproxi: 14, 0, 0, 0, 0, 0, 0, 0
+fast_conect0: 18, 1, 1, 0, 0, 0, 0, 0
+fastnettools: 31, 0, 0, 0, 0, 0, 0, 0
+filtershekan_channel: 24, 0, 0, 0, 0, 0, 0, 0
+flyv2ray: 32, 0, 0, 0, 0, 0, 0, 0
+free1_vpn: 3, 0, 0, 0, 0, 0, 0, 0
+freeland8: 6, 0, 0, 0, 0, 0, 0, 0
+g0dv2ray: 46, 0, 0, 0, 0, 0, 0, 0
+gargabil: 13, 0, 0, 0, 0, 0, 0, 0
+ghalagyann: 60, 0, 0, 0, 0, 0, 0, 0
+ghalagyann2: 60, 0, 0, 0, 0, 0, 0, 0
+ghoflshcan: 30, 0, 0, 0, 0, 0, 0, 0
+gozargahazad: 8, 0, 0, 14, 3, 13, 10, 0
+harfbzaniiim: 11, 0, 0, 0, 0, 0, 0, 0
+hddify: 40, 0, 0, 0, 0, 0, 0, 0
+heartdebt: 0, 0, 0, 0, 0, 0, 0, 0
+hex_proxy: 25, 0, 0, 0, 0, 0, 0, 0
+hi_proxy_iran: 15, 0, 0, 0, 0, 0, 0, 0
+hiddify_nexttt: 36, 0, 0, 0, 0, 0, 0, 2
+icv2ray: 29, 0, 0, 0, 1, 0, 0, 0
+iiproxyiran: 54, 0, 0, 0, 0, 0, 0, 0
+infotech_vk: 6, 0, 0, 0, 0, 0, 0, 0
+ipv2ray: 53, 0, 0, 0, 0, 0, 0, 0
+iranconnecting: 30, 0, 0, 0, 0, 0, 0, 0
+iranvasll: 1, 0, 0, 0, 0, 0, 0, 0
+irv2rey: 17, 0, 0, 0, 0, 0, 0, 0
+jkvpn: 24, 0, 0, 0, 0, 0, 0, 0
+jynmarket: 22, 0, 0, 0, 0, 0, 0, 0
+kamkarstore: 11, 0, 0, 0, 0, 0, 0, 0
+kurdconfing: 17, 0, 0, 0, 0, 0, 0, 0
+marambashi: 12, 0, 0, 0, 0, 0, 0, 0
+maramivpn: 7, 0, 0, 0, 0, 0, 0, 0
+masster_vpn: 39, 0, 0, 0, 0, 0, 0, 0
+maznet: 26, 0, 0, 0, 0, 0, 0, 0
+mellinet_npv: 44, 0, 0, 0, 0, 0, 0, 0
+merlin_vip: 2, 0, 0, 0, 0, 0, 0, 0
+mitivpn: 39, 0, 0, 0, 0, 0, 0, 0
+moft_vpn: 48, 0, 0, 0, 0, 0, 0, 0
+mtmvpn: 8, 0, 0, 0, 0, 0, 0, 0
+musiclovers85: 1, 0, 0, 0, 0, 0, 0, 0
+mymoon_81: 1, 0, 0, 0, 0, 0, 0, 0
+napsternet_confing1: 38, 0, 0, 0, 0, 0, 0, 0
+net2proxy: 24, 0, 0, 0, 0, 0, 0, 1
+netnewz: 31, 0, 0, 0, 0, 0, 0, 0
+nftvici: 1, 0, 0, 0, 0, 0, 0, 0
+nitrustore: 20, 0, 0, 0, 0, 0, 0, 0
+npv_tunnela: 40, 0, 0, 0, 0, 0, 0, 0
+npv_tunnelorg: 20, 0, 0, 0, 0, 0, 0, 0
+npvfreeall: 42, 0, 0, 0, 0, 0, 0, 0
+npvtunel: 46, 0, 0, 0, 0, 0, 0, 0
+npvv2rayfilter: 45, 0, 0, 0, 0, 0, 0, 0
+persianvpnhub: 0, 0, 0, 0, 0, 0, 0, 7
+pewezatech: 2, 0, 0, 0, 0, 0, 0, 0
+proxy_badss: 1, 0, 0, 0, 0, 0, 0, 0
+proxy_kafee: 8, 0, 0, 0, 0, 0, 0, 0
+proxy_mtm: 8, 0, 0, 0, 0, 0, 0, 0
+proxypj: 8, 0, 0, 0, 0, 0, 0, 0
+proxysnipe: 44, 0, 0, 0, 0, 0, 0, 0
+proxystore11: 15, 0, 0, 0, 0, 0, 0, 0
+proxyzeno: 31, 1, 0, 0, 0, 0, 0, 0
+rk_vps: 27, 0, 0, 0, 0, 0, 0, 0
+server01012: 39, 0, 0, 0, 0, 0, 0, 0
+servernett: 26, 0, 0, 0, 0, 0, 0, 0
+serverstm: 39, 0, 0, 0, 0, 0, 0, 0
+shadowproxy66: 3, 0, 0, 0, 0, 0, 0, 0
+shh_proxy: 42, 0, 0, 0, 0, 0, 0, 0
+sil3nt_network: 13, 0, 0, 0, 0, 0, 0, 0
+sinavm: 17, 0, 0, 0, 0, 0, 0, 0
+singbox1: 10, 0, 0, 0, 0, 0, 0, 0
+sorenab2: 7, 3, 0, 0, 10, 2, 0, 0
+srcvpn: 46, 0, 0, 0, 0, 0, 0, 0
+tasiyanc: 6, 0, 0, 0, 0, 0, 0, 0
+taziyanteam: 14, 0, 0, 0, 0, 0, 0, 0
+tel_melli: 58, 0, 0, 0, 0, 0, 0, 0
+telpj: 8, 0, 0, 0, 0, 0, 0, 0
+thephantom_net: 22, 0, 0, 0, 0, 0, 0, 0
+tweety_proxy: 14, 0, 0, 0, 0, 0, 0, 0
+uinqvpn: 30, 0, 0, 0, 0, 0, 0, 0
+unlimitconfig: 1, 1, 0, 0, 0, 0, 0, 0
+unlimiteddev: 28, 0, 0, 0, 0, 0, 0, 0
+v2dogs_n: 7, 0, 0, 0, 0, 0, 0, 0
+v2hubir: 7, 0, 0, 0, 1, 0, 0, 0
+v2proxypvn: 36, 0, 0, 0, 0, 0, 0, 0
+v2ray1_ng: 1, 0, 0, 0, 0, 0, 0, 0
+v2ray_alpha: 41, 0, 0, 0, 0, 0, 0, 0
+v2ray_confing33: 11, 0, 0, 0, 0, 0, 0, 0
+v2ray_official: 34, 0, 0, 0, 0, 0, 0, 0
+v2ray_vpn_ir: 11, 0, 0, 0, 0, 0, 0, 0
+v2rayenglish: 44, 0, 0, 0, 0, 0, 0, 0
+v2raymelliii: 21, 0, 0, 0, 0, 0, 1, 0
+v2rayng405: 7, 0, 0, 0, 0, 0, 0, 0
+v2rayng_cafe: 43, 0, 0, 0, 0, 0, 0, 0
+v2rayng_fars: 2, 0, 0, 0, 0, 0, 0, 0
+v2rayngcloud: 19, 0, 0, 0, 0, 0, 0, 0
+v2rayngvpn: 56, 0, 0, 0, 0, 0, 1, 0
+v2rayroom: 3, 0, 0, 0, 0, 0, 0, 0
+v2raytun0: 19, 0, 0, 0, 0, 0, 0, 0
+v2rayyngvpn: 4, 0, 0, 0, 0, 0, 0, 0
+vasl_bashim: 10, 0, 0, 0, 0, 0, 0, 0
+vipv2rayngnp: 40, 1, 0, 0, 0, 0, 0, 0
+vlinews: 1, 0, 0, 0, 0, 0, 0, 0
+vmessorg: 39, 0, 0, 0, 0, 0, 0, 0
+voxvpnonline: 25, 0, 0, 0, 0, 0, 0, 0
+vpn_click: 15, 0, 0, 0, 0, 0, 0, 0
+vpn_hubtm: 54, 1, 0, 0, 0, 0, 0, 0
+vpn_shield: 6, 0, 0, 0, 0, 0, 0, 0
+vpn_solve: 13, 0, 0, 0, 0, 0, 0, 0
+vpnbaz: 9, 0, 0, 0, 0, 0, 0, 0
+vpncustomize: 23, 0, 0, 0, 0, 0, 0, 0
+vpnferi: 42, 0, 0, 0, 0, 0, 0, 0
+vpnfredom: 25, 0, 0, 0, 0, 0, 0, 0
+vpnparsajo: 3, 0, 0, 0, 0, 0, 0, 0
+vpnx44: 13, 0, 0, 0, 0, 0, 0, 0
+wedbaztel: 6, 0, 0, 0, 0, 0, 0, 0
+xpnteam: 26, 0, 0, 0, 0, 0, 0, 0
+xtodayz: 1, 0, 0, 0, 0, 0, 0, 0
+xv2ray: 60, 0, 0, 0, 0, 0, 0, 0
+y2knistam: 5, 0, 0, 0, 0, 0, 0, 0
+zero_tunnel: 3, 0, 0, 0, 0, 0, 0, 0
+znetai: 15, 0, 0, 0, 0, 0, 0, 0

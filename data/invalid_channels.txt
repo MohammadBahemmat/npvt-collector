@@ -1,4 +1,4 @@
-Invalid Telegram Channels — 2026-08-05T03:34:02.865789+00:00
+Invalid Telegram Channels — 2026-08-05T05:10:19.048028+00:00
 
 +jtinm8-guq41otji
 104
@@ -42,8 +42,6 @@ admin
 adnovashopnet
 ads_central_net
 ads_config
-adsvipz
-ae_proxy
 afloke
 aghayapple
 ahmadreza4_shz

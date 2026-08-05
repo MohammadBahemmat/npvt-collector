@@ -2701,6 +2701,7 @@ xtodays
 xtodayz
 xtodayz_channel
 xtodayz_playlist
+xv2ray
 xv2ry2
 y2knistam
 yaa30in

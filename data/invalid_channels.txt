@@ -1,4 +1,4 @@
-Invalid Telegram Channels — 2026-08-05T12:07:20.874058+00:00
+Invalid Telegram Channels — 2026-08-05T13:54:28.585137+00:00
 
 +jtinm8-guq41otji
 104
@@ -25,6 +25,7 @@ Invalid Telegram Channels — 2026-08-05T12:07:20.874058+00:00
 a11rezaaa
 a_sh1567
 aaaaa234565
+aawed313
 ab_vpn_bot
 abolfazlb8
 aboli_5980
@@ -271,7 +272,6 @@ diginetxbot
 dismaying
 dmt_channel1
 dmtvpn
-dns_amir
 do1rcci50gb
 dogmnabashpodcast
 dotoneclickerbot
@@ -811,6 +811,7 @@ parhamkooo
 parivpnbot_bot
 paroton
 pars_vpn
+parsashonam
 parsconnection3
 pastelluna
 paya_vpn
@@ -1123,7 +1124,6 @@ tradefastrobot
 tradenets_sup
 tradevpn_robot
 trexxxvpnbot
-trower_shop
 trp_money
 tsteam_support
 tsteamshopbot

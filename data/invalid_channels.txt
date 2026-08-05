@@ -1,4 +1,4 @@
-Invalid Telegram Channels — 2026-08-05T00:12:13.685254+00:00
+Invalid Telegram Channels — 2026-08-05T01:56:35.884756+00:00
 
 +jtinm8-guq41otji
 104
@@ -579,7 +579,6 @@ lotus_adminn00
 love_vpn
 lran909
 lucicdoam
-lucky_vpn
 lyricpixelart
 lyriffy
 lz_vpn
@@ -1093,7 +1092,6 @@ tecrafcommunity
 tehrann_proxy
 telegram_vpn
 testrayoga
-tezistore
 tgrvpn_
 the_darkshepherd
 themecherie

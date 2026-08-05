@@ -20,3 +20,4 @@
 2026-08-05 18:56:53 | found=32 duplicates=8 already_sent=2 attempted=40 sent=40 failed=0 pending_queue=2075 filtered=0 invalid_channels=1
 2026-08-05 19:05:12 | found=4 duplicates=0 already_sent=0 attempted=40 sent=40 failed=0 pending_queue=2039 filtered=0 invalid_channels=1
 2026-08-05 19:13:53 | found=20 duplicates=2 already_sent=2 attempted=40 sent=40 failed=0 pending_queue=2013 filtered=0 invalid_channels=1
+2026-08-05 19:22:04 | found=4 duplicates=0 already_sent=0 attempted=40 sent=40 failed=0 pending_queue=1977 filtered=0 invalid_channels=2

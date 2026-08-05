@@ -1,7 +1,13 @@
-name: NPVT Collector (auto-chain)
+name: NPVT Collector
 
 on:
-  workflow_dispatch:      # فقط با اجرای دستی شروع می‌شود؛ بعد از آن خودش را دوباره صدا می‌زند
+  workflow_dispatch:      # اجرای دستی از تب Actions، هر وقت لازم بود
+  schedule:
+    # راس هر ساعت (دقیقه‌ی صفر). GitHub Actions طبق مستندات خودش می‌تواند
+    # در بازه‌های پرترافیک، اجرای واقعی را تا چند دقیقه به تأخیر بیندازد؛
+    # این یک محدودیت پلتفرم است و از طریق تنظیمات این پروژه قابل حذف نیست،
+    # اما برای کاربرد این پروژه (اسکن هر ساعته‌ی چند کانال) کاملاً کافی است.
+    - cron: '45 */3 * * *'
 
 concurrency:
   group: npvt-collector-run
@@ -10,11 +16,7 @@ concurrency:
 jobs:
   collect:
     runs-on: ubuntu-latest
-    # توجه: timeout-minutes به‌عمد از این‌جا حذف شده تا اجرای طولانی (مثلاً
-    # وقتی صف ارسال بزرگ است یا محدودیت نرخ تلگرام پیش می‌آید) کشته نشود.
-    # با این حال، خودِ GitHub Actions یک سقف مطلق و غیرقابل‌دورزدن ۳۶۰ دقیقه‌ای
-    # (۶ ساعت) روی هر Job اعمال می‌کند؛ این محدودیت پلتفرم است، نه چیزی که
-    # ما تعریف کرده باشیم، و از طریق تنظیمات این پروژه قابل حذف نیست.
+    timeout-minutes: 60
     permissions:
       contents: write
 
@@ -38,7 +40,7 @@ jobs:
         run: python src/npvt_collector.py
 
       - name: Commit and push updated state
-        timeout-minutes: 60
+        timeout-minutes: 30
         continue-on-error: true
         run: |
           git config user.name "GitHub Actions Bot"
@@ -52,20 +54,3 @@ jobs:
             git pull --rebase --strategy-option ours
             git push
           fi
-
-      # ---- بلافاصله پس از پایان این اجرا، اجرای بعدی را صدا می‌زند ----
-      # نیازمند Secret به نام GH_TOKEN (یک Personal Access Token با دسترسی
-      # repo + workflow)، چون توکن پیش‌فرض GITHUB_TOKEN اجازه‌ی صدا زدن
-      # workflow_dispatch را ندارد (محدودیت امنیتی خودِ گیت‌هاب).
-      - name: Trigger next run
-        if: success()
-        uses: actions/github-script@v7
-        with:
-          github-token: ${{ secrets.GH_TOKEN }}
-          script: |
-            await github.rest.actions.createWorkflowDispatch({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              workflow_id: 'collector.yml',
-              ref: 'main'
-            });

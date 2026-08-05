@@ -1,4 +1,4 @@
-Invalid Telegram Channels — 2026-08-05T08:34:25.206322+00:00
+Invalid Telegram Channels — 2026-08-05T10:20:06.107834+00:00
 
 +jtinm8-guq41otji
 104
@@ -115,6 +115,7 @@ aylyahnramwz
 azadbirdbot
 azadboy
 azadeh_support
+azadiii_1404
 azdeltaghalam
 azirproxybot
 b_vpn_free
@@ -1029,7 +1030,6 @@ solarvpnbot
 solrshop2bot
 sordovpnbot
 sordovpntest
-sos_war_iran
 sosk
 soske
 soskey

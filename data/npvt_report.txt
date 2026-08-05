@@ -1,1 +1,2 @@
 2026-08-05 16:06:21 | found=3172 duplicates=553 already_sent=0 attempted=40 sent=40 failed=0 pending_queue=2579 filtered=1 invalid_channels=1
+2026-08-05 16:14:59 | found=8 duplicates=1 already_sent=0 attempted=40 sent=40 failed=0 pending_queue=2546 filtered=0 invalid_channels=1

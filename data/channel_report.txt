@@ -1,146 +1,147 @@
-NPVT Channel Report — last update: 2026-08-05T16:06:21.955199+00:00
+NPVT Channel Report — last update: 2026-08-05T16:14:59.129571+00:00
 
-ada_free_connect: 1
-anonymouskeys: 35
-anty_filter: 9
-argo_vpnn: 35
-azadinternet_tv: 42
-azdeltaghalam7: 5
-blackray: 30
-broz_time: 56
-capoit: 4
-config_fre: 8
-config_magazine: 27
-configir98: 31
-configpluse: 12
-configraygan: 6
-configshub: 12
-configx2ray: 37
-confiig_connect: 14
-confing_proxi1: 12
-cooonfig: 55
-cpy_teel: 4
-dalton_ping: 40
-dns_amir: ERR
-e404tech: 13
-eliv2ray: 47
-farsiproxi: 14
-fast_conect0: 18
-fastnettools: 31
-filtershekan_channel: 24
-flyv2ray: 32
-free1_vpn: 3
-freeland8: 6
-g0dv2ray: 46
-gargabil: 13
-ghalagyann: 60
-ghalagyann2: 60
-ghoflshcan: 30
-gozargahazad: 8
-harfbzaniiim: 11
-hddify: 40
-heartdebt: 0
-hex_proxy: 25
-hi_proxy_iran: 15
-hiddify_nexttt: 36
-icv2ray: 29
-iiproxyiran: 54
-infotech_vk: 6
-ipv2ray: 53
-iranconnecting: 30
-iranvasll: 1
-irv2rey: 17
-jkvpn: 24
-jynmarket: 22
-kamkarstore: 11
-kurdconfing: 17
-marambashi: 12
-maramivpn: 7
-masster_vpn: 39
-maznet: 26
-mellinet_npv: 44
-merlin_vip: 2
-mitivpn: 39
-moft_vpn: 48
-mtmvpn: 8
-musiclovers85: 1
-mymoon_81: 1
-napsternet_confing1: 38
-net2proxy: 24
-netnewz: 31
-nftvici: 1
-nitrustore: 20
-npv_tunnela: 40
-npv_tunnelorg: 20
-npvfreeall: 42
-npvtunel: 46
-npvv2rayfilter: 45
-persianvpnhub: 0
-pewezatech: 2
-proxy_badss: 1
-proxy_kafee: 8
-proxy_mtm: 8
-proxypj: 8
-proxysnipe: 44
-proxystore11: 15
-proxyzeno: 31
-rk_vps: 27
-server01012: 39
-servernett: 26
-serverstm: 39
-shadowproxy66: 3
-shh_proxy: 42
-sil3nt_network: 13
-sinavm: 17
-singbox1: 10
-sorenab2: 7
-srcvpn: 46
-tasiyanc: 6
-taziyanteam: 14
-tel_melli: 58
-telpj: 8
-thephantom_net: 22
-tweety_proxy: 14
-uinqvpn: 30
-unlimitconfig: 1
-unlimiteddev: 28
-v2dogs_n: 7
-v2hubir: 7
-v2proxypvn: 36
-v2ray1_ng: 1
-v2ray_alpha: 41
-v2ray_confing33: 11
-v2ray_official: 34
-v2ray_vpn_ir: 11
-v2rayenglish: 44
-v2raymelliii: 21
-v2rayng405: 7
-v2rayng_cafe: 43
-v2rayng_fars: 2
-v2rayngcloud: 19
-v2rayngvpn: 56
-v2rayroom: 3
-v2raytun0: 19
-v2rayyngvpn: 4
-vasl_bashim: 10
-vipv2rayngnp: 40
-vlinews: 1
-vmessorg: 39
-voxvpnonline: 25
-vpn_click: 15
-vpn_hubtm: 54
-vpn_shield: 6
-vpn_solve: 13
-vpnbaz: 9
-vpncustomize: 23
-vpnferi: 42
-vpnfredom: 25
-vpnparsajo: 3
-vpnx44: 13
-wedbaztel: 6
-xpnteam: 26
-xtodayz: 1
-xv2ray: 60
-y2knistam: 5
-zero_tunnel: 3
-znetai: 15
+NPVT Channel Report — last update: 2026-08-05T16:06:21.955199+00:00
+ada_free_connect: 1, 0
+anonymouskeys: 35, 0
+anty_filter: 9, 0
+argo_vpnn: 35, 0
+azadinternet_tv: 42, 0
+azdeltaghalam7: 5, 0
+blackray: 30, 0
+broz_time: 56, 0
+capoit: 4, 0
+config_fre: 8, 0
+config_magazine: 27, 0
+configir98: 31, 0
+configpluse: 12, 0
+configraygan: 6, 0
+configshub: 12, 0
+configx2ray: 37, 0
+confiig_connect: 14, 0
+confing_proxi1: 12, 0
+cooonfig: 55, 0
+cpy_teel: 4, 0
+dalton_ping: 40, 0
+dns_amir: ERR, ERR
+e404tech: 13, 0
+eliv2ray: 47, 0
+farsiproxi: 14, 0
+fast_conect0: 18, 1
+fastnettools: 31, 0
+filtershekan_channel: 24, 0
+flyv2ray: 32, 0
+free1_vpn: 3, 0
+freeland8: 6, 0
+g0dv2ray: 46, 0
+gargabil: 13, 0
+ghalagyann: 60, 0
+ghalagyann2: 60, 0
+ghoflshcan: 30, 0
+gozargahazad: 8, 0
+harfbzaniiim: 11, 0
+hddify: 40, 0
+heartdebt: 0, 0
+hex_proxy: 25, 0
+hi_proxy_iran: 15, 0
+hiddify_nexttt: 36, 0
+icv2ray: 29, 0
+iiproxyiran: 54, 0
+infotech_vk: 6, 0
+ipv2ray: 53, 0
+iranconnecting: 30, 0
+iranvasll: 1, 0
+irv2rey: 17, 0
+jkvpn: 24, 0
+jynmarket: 22, 0
+kamkarstore: 11, 0
+kurdconfing: 17, 0
+marambashi: 12, 0
+maramivpn: 7, 0
+masster_vpn: 39, 0
+maznet: 26, 0
+mellinet_npv: 44, 0
+merlin_vip: 2, 0
+mitivpn: 39, 0
+moft_vpn: 48, 0
+mtmvpn: 8, 0
+musiclovers85: 1, 0
+mymoon_81: 1, 0
+napsternet_confing1: 38, 0
+net2proxy: 24, 0
+netnewz: 31, 0
+nftvici: 1, 0
+nitrustore: 20, 0
+npv_tunnela: 40, 0
+npv_tunnelorg: 20, 0
+npvfreeall: 42, 0
+npvtunel: 46, 0
+npvv2rayfilter: 45, 0
+persianvpnhub: 0, 0
+pewezatech: 2, 0
+proxy_badss: 1, 0
+proxy_kafee: 8, 0
+proxy_mtm: 8, 0
+proxypj: 8, 0
+proxysnipe: 44, 0
+proxystore11: 15, 0
+proxyzeno: 31, 1
+rk_vps: 27, 0
+server01012: 39, 0
+servernett: 26, 0
+serverstm: 39, 0
+shadowproxy66: 3, 0
+shh_proxy: 42, 0
+sil3nt_network: 13, 0
+sinavm: 17, 0
+singbox1: 10, 0
+sorenab2: 7, 3
+srcvpn: 46, 0
+tasiyanc: 6, 0
+taziyanteam: 14, 0
+tel_melli: 58, 0
+telpj: 8, 0
+thephantom_net: 22, 0
+tweety_proxy: 14, 0
+uinqvpn: 30, 0
+unlimitconfig: 1, 1
+unlimiteddev: 28, 0
+v2dogs_n: 7, 0
+v2hubir: 7, 0
+v2proxypvn: 36, 0
+v2ray1_ng: 1, 0
+v2ray_alpha: 41, 0
+v2ray_confing33: 11, 0
+v2ray_official: 34, 0
+v2ray_vpn_ir: 11, 0
+v2rayenglish: 44, 0
+v2raymelliii: 21, 0
+v2rayng405: 7, 0
+v2rayng_cafe: 43, 0
+v2rayng_fars: 2, 0
+v2rayngcloud: 19, 0
+v2rayngvpn: 56, 0
+v2rayroom: 3, 0
+v2raytun0: 19, 0
+v2rayyngvpn: 4, 0
+vasl_bashim: 10, 0
+vipv2rayngnp: 40, 1
+vlinews: 1, 0
+vmessorg: 39, 0
+voxvpnonline: 25, 0
+vpn_click: 15, 0
+vpn_hubtm: 54, 1
+vpn_shield: 6, 0
+vpn_solve: 13, 0
+vpnbaz: 9, 0
+vpncustomize: 23, 0
+vpnferi: 42, 0
+vpnfredom: 25, 0
+vpnparsajo: 3, 0
+vpnx44: 13, 0
+wedbaztel: 6, 0
+xpnteam: 26, 0
+xtodayz: 1, 0
+xv2ray: 60, 0
+y2knistam: 5, 0
+zero_tunnel: 3, 0
+znetai: 15, 0

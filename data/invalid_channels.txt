@@ -1,4 +1,4 @@
-Invalid Telegram Channels — 2026-08-05T13:54:28.585137+00:00
+Invalid Telegram Channels — 2026-08-05T15:34:14.914058+00:00
 
 +jtinm8-guq41otji
 104
@@ -811,7 +811,6 @@ parhamkooo
 parivpnbot_bot
 paroton
 pars_vpn
-parsashonam
 parsconnection3
 pastelluna
 paya_vpn

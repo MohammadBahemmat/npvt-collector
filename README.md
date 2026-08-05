@@ -8,7 +8,6 @@
 <body>
 <div class="container">
 
-<!-- ====== ردیف نشان‌های اطلاعاتی پروژه ====== -->
 <div align="center" style="margin-bottom: 15px;">
 
 <img src="https://img.shields.io/badge/Python-3.10+-blue?style=for-the-badge&logo=python&logoColor=white" alt="Python">
@@ -32,7 +31,7 @@
 این پروژه صفحهٔ پیش‌نمایش وبِ عمومیِ کانال‌ها (<code>t.me/s</code>) را می‌خواند — دقیقاً همان روشی که در پروژه‌های <code>V2ray-Collector</code> و <code>news-monitor</code> استفاده شده — بدون نیاز به <strong>API، لاگین اکانت کاربری یا شماره تلفن شخصی</strong>.
 </p>
 <p>
-هر فایل جدید بر اساس <strong>نام + حجم</strong> با فایل‌های قبلاً دیده‌شده مقایسه و در صورت تکراری بودن حذف می‌شود؛ سپس لینک فایل‌های یکتا از طریق یک <strong>بات تلگرامی معمولی</strong> (بدون نیاز به فوروارد یا عضویت در کانال‌های مبدأ) به کانال دلخواه شما ارسال می‌شود.
+هر فایل جدید بر اساس <strong>نام + حجم</strong> با فایل‌های قبلاً دیده‌شده مقایسه و در صورت تکراری بودن حذف می‌شود؛ سپس حداکثر ۱۰ فایل یکتای جدیدترین (بر اساس زمان انتشار در کانال مبدأ) در یک پیام، از طریق یک <strong>بات تلگرامی معمولی</strong> به کانال دلخواه شما ارسال می‌شود.
 </p>
 
 <img src="line.gif" alt="separator" style="display: block; margin: 30px auto;" />
@@ -49,40 +48,32 @@
     <td>هیچ شماره تلفن، لاگین اکانت کاربری (Userbot) یا عضویت در کانال‌های مبدأ لازم نیست. فقط صفحهٔ عمومی وب هر کانال (<code>t.me/s/&lt;channel&gt;</code>) خوانده می‌شود.</td>
 </tr>
 <tr>
-    <td><strong>📄 استخراج دقیق نام و حجم فایل</strong></td>
-    <td>نام و حجم هر فایل <code>.npvt</code> (همان‌طور که خودِ تلگرام نمایش می‌دهد، مثل <code>3.5 KB</code>) به‌همراه لینک مستقیم پیام استخراج می‌شود.</td>
+    <td><strong>🕐 زمان‌بندی دقیق ساعتی</strong></td>
+    <td>با <code>cron</code> استاندارد گیت‌هاب اکشن، راس هر ساعت اجرا می‌شود — ساده، قابل‌اعتماد، و بدون نیاز به هیچ Secret اضافه‌ای.</td>
+</tr>
+<tr>
+    <td><strong>📄 استخراج نام، حجم و زمان انتشار</strong></td>
+    <td>برای هر فایل <code>.npvt</code>، نام، حجم (همان‌طور که خودِ تلگرام نمایش می‌دهد) و زمان دقیق انتشار پیام در کانال مبدأ استخراج می‌شود.</td>
 </tr>
 <tr>
     <td><strong>🧹 حذف هوشمند موارد تکراری</strong></td>
     <td>فقط زمانی که <strong>هم نام و هم حجم</strong> یک فایل با فایلی دیگر (در همین کانال، کانالی دیگر، یا اجرای قبلی) یکسان باشد، تکراری در نظر گرفته و حذف می‌شود.</td>
 </tr>
 <tr>
+    <td><strong>🔟 حداکثر ۱۰ فایل، همیشه جدیدترین‌ها</strong></td>
+    <td>اگر بیش از ۱۰ فایل جدید در یک اجرا پیدا شود، فقط ۱۰ تای جدیدترین (بر اساس زمان انتشار) ارسال می‌شود؛ بقیه طبق دستور صریح شما کاملاً کنار گذاشته می‌شوند — نه در صف اجرای بعدی.</td>
+</tr>
+<tr>
     <td><strong>📤 ارسال با بات معمولی تلگرام</strong></td>
-    <td>لینک هر فایل یکتا با یک بات ساده (Bot API) به کانال مقصد شما ارسال می‌شود؛ بات فقط باید در کانال مقصد خودتان ادمین باشد.</td>
-</tr>
-<tr>
-    <td><strong>🧩 Checkpoint (ادامه از همان نقطه)</strong></td>
-    <td>آخرین <code>message_id</code> بررسی‌شدهٔ هر کانال ذخیره می‌شود؛ در اجرای بعدی فقط پیام‌های جدید بررسی می‌شوند.</td>
-</tr>
-<tr>
-    <td><strong>💾 آرشیو ضدتکرار دائمی</strong></td>
-    <td>فایل‌هایی که یک‌بار لینک‌شان ارسال شده در <code>data/seen_files.json</code> ثبت می‌شوند تا هیچ‌وقت دوباره ارسال نشوند.</td>
-</tr>
-<tr>
-    <td><strong>📊 گزارش هر اجرا</strong></td>
-    <td>خلاصهٔ هر اجرا (تعداد یافت‌شده، تکراری، جدید، ارسال‌شده) در <code>data/npvt_report.txt</code> ثبت می‌شود.</td>
-</tr>
-<tr>
-    <td><strong>📈 گزارش وضعیت هر کانال (مثل V2ray-Collector)</strong></td>
-    <td>در <code>data/channel_report.txt</code> می‌بینید در هر اجرا از هر کانال چند فایل <code>.npvt</code> پیدا شده؛ کانال‌های غیرقابل‌دسترسی هم در <code>data/invalid_channels.txt</code> فهرست می‌شوند.</td>
-</tr>
-<tr>
-    <td><strong>🔁 اجرای زنجیره‌ای پیوسته</strong></td>
-    <td>مثل <code>V2ray-Collector</code>، هر اجرا بلافاصله پس از پایان، اجرای بعدی را خودش صدا می‌زند و این چرخه تا زمانی که متوقفش کنید ادامه دارد.</td>
+    <td>یک پیام هدر (بولد) و بلافاصله بعد از آن یک پیام حاوی فهرست فایل‌های هایپرلینک‌شده ارسال می‌شود؛ بات فقط باید در کانال مقصد خودتان ادمین باشد.</td>
 </tr>
 <tr>
     <td><strong>🚫 فیلتر نام فایل</strong></td>
     <td>فایل‌هایی که نامشان حاوی کلیدواژه‌های تعریف‌شده در <code>data/blocked_keywords.txt</code> باشد، اصلاً جمع‌آوری یا منتشر نمی‌شوند؛ فهرست آن‌ها فقط برای شفافیت در <code>data/filtered_files.txt</code> ثبت می‌شود.</td>
+</tr>
+<tr>
+    <td><strong>📈 گزارش وضعیت هر کانال (مثل V2ray-Collector)</strong></td>
+    <td><code>data/channel_report.txt</code> نشان می‌دهد در هر اجرا از هر کانال چند فایل <code>.npvt</code> پیدا شده؛ کانال‌های غیرقابل‌دسترسی هم در <code>data/invalid_channels.txt</code> فهرست می‌شوند.</td>
 </tr>
 <tr>
     <td><strong>🚀 اجرای کاملاً خودکار و رایگان</strong></td>
@@ -96,7 +87,7 @@
 <!-- چرا بدون فوروارد -->
 <h2>⚠️ چرا «فوروارد واقعی» در این پروژه وجود ندارد؟</h2>
 <p>
-فوروارد واقعیِ یک پیام از کانال‌های دلخواهِ دیگران فقط با یک <strong>اکانت کاربری واقعی</strong> (Userbot، مثل Telethon) ممکن است — یعنی وارد کردن شماره تلفن شخصی و ریسک محدودیت (Flood) یا بن آن اکانت. چون این ریسک قابل قبول نیست، این پروژه به‌طور کامل از آن روش صرف‌نظر کرده و در عوض:
+فوروارد واقعیِ پیام از کانال‌های دلخواهِ دیگران فقط با یک <strong>اکانت کاربری واقعی</strong> (Userbot، مثل Telethon) ممکن است — یعنی وارد کردن شماره تلفن شخصی و ریسک محدودیت (Flood) یا بن آن اکانت. چون این ریسک قابل قبول نیست، این پروژه به‌طور کامل از آن روش صرف‌نظر کرده و در عوض:
 </p>
 <ul>
     <li><strong>جمع‌آوری</strong> فقط با درخواست HTTP ساده به صفحهٔ عمومی <code>t.me/s/...</code> انجام می‌شود (بدون لاگین، بدون عضویت، بدون شماره تلفن).</li>
@@ -121,6 +112,31 @@
     <li><strong>تطبیق substring است</strong>، نه فقط کلمه‌ی کامل: یعنی اگر کلیدواژه‌ی «شاه» فعال باشد، فایلی به نام «شاهین.npvt» هم فیلتر می‌شود، چون این کلمه را در خود دارد. این یک محدودیت شناخته‌شده و عمدی است (برای اطمینان بیشتر، حتی به قیمت فیلتر شدن گاه‌به‌گاه یک نام بی‌ربط).</li>
     <li>هر فایلی که فیلتر شود، در <code>data/filtered_files.txt</code> ثبت می‌شود (فقط برای شفافیت و بررسی؛ این فایل‌ها هیچ‌وقت به کانال مقصد ارسال نمی‌شوند).</li>
 </ul>
+
+<img src="line.gif" alt="separator" style="display: block; margin: 30px auto;" />
+
+<!-- فرمت پیام ارسالی -->
+<h2>📨 فرمت پیام‌های ارسالی</h2>
+<p>هر اجرا، در صورت داشتن فایل جدید برای ارسال، دقیقاً <strong>دو پیام</strong> به کانال مقصد می‌فرستد:</p>
+<ol>
+    <li>یک پیام هدر <strong>بولد</strong>:
+        <pre class="ltr-block" dir="rtl">فایل های NPVT جدید 😁👇</pre>
+    </li>
+    <li>بلافاصله بعد از آن، یک پیام حاوی فهرست فایل‌ها که هرکدام به‌صورت <strong>هایپرلینک</strong> به پیام اصلی در کانال مبدأ است:
+        <pre class="ltr-block" dir="rtl">
+فایل 1   ← لینک به پیام اصلی
+فایل 2   ← لینک به پیام اصلی
+...
+فایل N   ← تا حداکثر ۱۰ مورد
+        </pre>
+    </li>
+</ol>
+<p>
+فایل‌ها بر اساس <strong>جدیدترین زمان انتشار در کانال مبدأ</strong> مرتب می‌شوند (فایل ۱ = جدیدترین). اگر در یک اجرا بیش از ۱۰ فایل جدید پیدا شود، فقط ۱۰ تای جدیدترین ارسال می‌شود و بقیه — طبق درخواست صریح — <strong>کاملاً کنار گذاشته می‌شوند</strong>؛ نه در صفِ اجرای بعدی می‌مانند و نه دوباره بررسی می‌شوند. اگر هیچ فایل جدیدی پیدا نشود، هیچ پیامی (نه هدر، نه فهرست) ارسال نمی‌شود.
+</p>
+<div class="highlight">
+تنها استثنا: اگر ارسال یکی از این دو پیام به‌خاطر خطای واقعی (نه سرریز سقف ۱۰ تایی) شکست بخورد — مثلاً قطعی موقت شبکه یا محدودیت نرخ تلگرام — کل آن دسته در <code>data/pending_send.json</code> ذخیره و در اجرای بعدی، <strong>پیش از</strong> فایل‌های تازه‌یاب، دوباره تلاش می‌شود.
+</div>
 
 <img src="line.gif" alt="separator" style="display: block; margin: 30px auto;" />
 
@@ -153,32 +169,21 @@
 <tr><td><code>MAX_PAGES_PER_CHANNEL</code></td><td><code>3</code></td><td>حداکثر تعداد صفحه‌ی عقب‌گرد (<code>?before=</code>) برای رسیدن به چک‌پوینت قبلی</td></tr>
 <tr><td><code>SLEEP_BETWEEN_CHANNELS</code></td><td><code>1.5</code></td><td>تاخیر (ثانیه) بین بررسی کانال‌ها</td></tr>
 <tr><td><code>SLEEP_BETWEEN_PAGES</code></td><td><code>1</code></td><td>تاخیر (ثانیه) بین صفحات یک کانال</td></tr>
-<tr><td><code>SLEEP_BETWEEN_SENDS</code></td><td><code>3.5</code></td><td>تاخیر (ثانیه) بین ارسال پیام‌ها به بات — برای ماندن زیر سقف ~۲۰ پیام در دقیقه‌ی تلگرام</td></tr>
+<tr><td><code>SLEEP_BETWEEN_SENDS</code></td><td><code>2</code></td><td>تاخیر (ثانیه) بین پیام هدر و پیام فهرست فایل‌ها</td></tr>
 <tr><td><code>REQUEST_TIMEOUT</code></td><td><code>10</code></td><td>حداکثر زمان انتظار (ثانیه) برای هر درخواست HTTP قبل از شکست خوردن</td></tr>
 <tr><td><code>MAX_SEND_RETRIES</code></td><td><code>6</code></td><td>حداکثر تعداد تلاش دوباره برای ارسال یک پیام، وقتی تلگرام خطای 429 (محدودیت نرخ) برمی‌گرداند</td></tr>
 <tr><td><code>MAX_RETRY_AFTER_WAIT</code></td><td><code>90</code></td><td>حداکثر زمانی (ثانیه) که برای هر تلاش دوباره صبر می‌شود، حتی اگر تلگرام عدد بزرگ‌تری بخواهد</td></tr>
-<tr><td><code>MAX_SENDS_PER_RUN</code></td><td><code>40</code></td><td>حداکثر تعداد پیامی که <strong>هر اجرا</strong> تلاش می‌کند ارسال کند؛ باقی در <code>data/pending_send.json</code> برای اجرای بعدی می‌مانند</td></tr>
+<tr><td><code>MAX_FILES_PER_MESSAGE</code></td><td><code>10</code></td><td>حداکثر تعداد فایل در هر اجرا؛ مازاد بر این، بدون قید و شرط کنار گذاشته می‌شود (نه در صف)</td></tr>
 </tbody>
 </table>
 
 <div class="highlight">
-<strong>🔐 تنظیم Secrets در گیتهاب:</strong> این مقادیر را در <strong>Settings</strong> &gt; <strong>Secrets and variables</strong> &gt; <strong>Actions</strong> تعریف کنید:
+<strong>🔐 تنظیم Secrets در گیتهاب:</strong> فقط همین دو مورد لازم است — در <strong>Settings</strong> &gt; <strong>Secrets and variables</strong> &gt; <strong>Actions</strong> تعریف کنید:
 <pre class="ltr-block">
 BOT_TOKEN         → توکن باتی که از BotFather گرفتید
 TARGET_CHANNEL    → یوزرنیم (مثل npvt_backup@) یا آیدی عددی (مثل 100xxxxxxxxxx-) کانال مقصد
-GH_TOKEN          → یک Personal Access Token با دسترسی repo + workflow (برای اجرای زنجیره‌ای خودکار)
 </pre>
-</div>
-
-<div class="highlight">
-<strong>🔗 دربارهٔ <code>GH_TOKEN</code> و اجرای زنجیره‌ای:</strong> این پروژه — دقیقاً مثل <code>V2ray-Collector</code> — به‌جای زمان‌بندی ثابت (cron)، در پایان هر اجرا خودش اجرای بعدی را صدا می‌زند و این چرخه تا ابد ادامه پیدا می‌کند. توکن پیش‌فرضی که خودِ GitHub Actions می‌سازد (<code>GITHUB_TOKEN</code>) به دلایل امنیتی اجازهٔ صدا زدن یک Workflow دیگر را ندارد؛ برای همین به یک <strong>Personal Access Token</strong> شخصی نیاز است. ساخت آن رایگان است:
-<ol>
-<li>به <a href="https://github.com/settings/tokens?type=beta" target="_blank">github.com/settings/tokens</a> بروید (یا مسیر Settings → Developer settings → Personal access tokens → Tokens (classic))</li>
-<li>روی <strong>Generate new token (classic)</strong> بزنید</li>
-<li>دسترسی‌های <code>repo</code> و <code>workflow</code> را تیک بزنید</li>
-<li>توکن ساخته‌شده را کپی کرده و به‌عنوان Secret با نام <code>GH_TOKEN</code> ذخیره کنید</li>
-</ol>
-⚠️ چون این توکن معادل دسترسی محدودشده به حساب گیت‌هاب شماست، تاریخ انقضا برایش تعیین کنید و آن را جایی به‌جز Secrets گیت‌هاب ذخیره نکنید.
+هیچ Secret دیگری (مثل Personal Access Token) لازم نیست.
 </div>
 
 <img src="line.gif" alt="separator" style="display: block; margin: 30px auto;" />
@@ -207,23 +212,17 @@ cd npvt-collector</pre>
 <!-- اجرای خودکار -->
 <h2>🤖 راه‌اندازی اجرای خودکار با GitHub Actions</h2>
 
-<h3>۱. فایل Workflow (اجرای زنجیره‌ای، دقیقاً مثل V2ray-Collector)</h3>
+<h3>۱. فایل Workflow (زمان‌بندی ساعتی با Cron)</h3>
 <p>پروژه با یک فایل YAML در مسیر <code>.github/workflows/collector.yml</code> اجرا می‌شود که:</p>
 <ul>
-    <li>فقط با <strong>workflow_dispatch</strong> (یک اجرای دستی اولیه) شروع می‌شود — هیچ <code>cron</code> ثابتی ندارد.</li>
+    <li>راس هر ساعت (<code>cron: '0 * * * *'</code>) خودکار اجرا می‌شود، و همچنین از تب Actions به‌صورت دستی (<strong>Run workflow</strong>) هم قابل اجراست.</li>
     <li>تمام کانال‌های <code>data/channels.txt</code> را اسکن می‌کند.</li>
-    <li>موارد تکراری را حذف و لینک فایل‌های جدید را به کانال مقصد ارسال می‌کند.</li>
+    <li>موارد تکراری را حذف، حداکثر ۱۰ فایل جدیدترین را انتخاب و به کانال مقصد ارسال می‌کند.</li>
     <li>فایل‌های وضعیت (چک‌پوینت، آرشیو ضدتکرار، <code>channel_report.txt</code>، <code>invalid_channels.txt</code>) را در مخزن commit می‌کند.</li>
-    <li><strong>بلافاصله پس از پایان موفق اجرا، خودش یک اجرای جدید را صدا می‌زند</strong> (مرحله‌ی «Trigger next run») و این چرخه تا وقتی که خودتان متوقفش کنید ادامه پیدا می‌کند.</li>
 </ul>
 
 <div class="highlight">
-<strong>⚠️ نکته‌ی مهم دربارهٔ اجرای زنجیره‌ای پیوسته:</strong>
-<ul>
-<li>اگر یک اجرا با خطا متوقف شود (مثلاً مشکل شبکه یا Rate Limit)، مرحله‌ی «Trigger next run» اجرا نمی‌شود و زنجیره کاملاً <strong>متوقف</strong> می‌شود؛ برای ادامه باید یک‌بار دیگر دستی از تب Actions اجرا (<strong>Run workflow</strong>) بزنید.</li>
-<li>چون هر اجرا بلافاصله اجرای بعدی را صدا می‌زند (بدون فاصله‌ی زمانی)، در مخزن‌های <strong>Private</strong>، سهمیه‌ی رایگان دقیقه‌های GitHub Actions (معمولاً ۲۰۰۰ دقیقه در ماه) می‌تواند سریع‌تر از یک زمان‌بندی ساعتی مصرف شود. برای کنترل این موضوع، مقادیر <code>SLEEP_BETWEEN_CHANNELS</code>، <code>SLEEP_BETWEEN_PAGES</code> و <code>SLEEP_BETWEEN_SENDS</code> در <code>config/.env.example</code> را می‌توانید بیشتر کنید تا هر اجرا کمی طولانی‌تر و با فاصله‌ی بیشتری تکرار شود، یا در صورت تمایل، خط <code>on: workflow_dispatch</code> را به یک <code>schedule: cron</code> ساده (مثلاً هر ۱۰ دقیقه) تغییر دهید تا به‌جای زنجیره‌ی پیوسته، با فاصله‌ی منظم اجرا شود.</li>
-<li><strong>سقف زمانی Job عمداً حذف شده</strong> تا یک اجرای طولانی (مثلاً به‌خاطر تعداد زیاد کانال یا صف بزرگ ارسال) کشته نشود؛ با این حال، خودِ GitHub Actions یک سقف مطلق ۳۶۰ دقیقه‌ای (۶ ساعت) روی هر Job اعمال می‌کند که قابل‌دور زدن نیست.</li>
-</ul>
+<strong>⏱️ دربارهٔ دقت زمان‌بندی:</strong> طبق مستندات خودِ گیت‌هاب، <code>schedule</code> ممکن است در بازه‌های پرترافیک تا چند دقیقه دیرتر از زمان دقیق (<code>0 * * * *</code>) واقعاً اجرا شود — این یک محدودیت پلتفرم گیت‌هاب است و از طریق تنظیمات این پروژه قابل حذف نیست. برای کاربردی مثل این (اسکن ساعتیِ چند کانال)، این مقدار تأخیر معمولاً بی‌اهمیت است. اگر دقت مطلق برایتان حیاتی است، تنها راه‌حل واقعی، اجرای زمان‌بندی‌شده روی یک سرور خودتان (مثل یک VPS با <code>cron</code> واقعی) است، نه GitHub Actions.
 </div>
 
 <h3>۲. افزودن کانال‌های مبدأ</h3>
@@ -233,7 +232,7 @@ cd npvt-collector</pre>
 <p>پس از هر اجرا، دو فایل زیر در <code>data/</code> به‌روزرسانی می‌شوند:</p>
 <ul>
     <li><code>channel_report.txt</code> — به ازای هر کانال، تاریخچه‌ی تعداد فایل <code>.npvt</code> پیدا‌شده در هر اجرا را (به ترتیب، جدا شده با کاما) نشان می‌دهد؛ مثلاً <code>napsternetv_file: 2, 0, 1</code> یعنی در سه اجرای اخیر، به ترتیب ۲، ۰ و ۱ فایل جدید پیدا شده است.</li>
-    <li><code>invalid_channels.txt</code> — فهرست به‌روزِ کانال‌هایی که آخرین‌باری که تست شدند قابل خواندن نبودند (کانال وجود ندارد، خصوصی است، یا مسدود شده). چون هر اجرا فقط بخشی از کانال‌ها را تست می‌کند، این فهرست بین اجراها با نتیجهٔ تازه ادغام می‌شود، نه بازنویسی کامل. در <code>channel_report.txt</code> هم این کانال‌ها با مقدار <code>ERR</code> مشخص می‌شوند.</li>
+    <li><code>invalid_channels.txt</code> — فهرست به‌روزِ کانال‌هایی که آخرین‌باری که تست شدند قابل خواندن نبودند (کانال وجود ندارد، خصوصی است، یا مسدود شده). در <code>channel_report.txt</code> هم این کانال‌ها با مقدار <code>ERR</code> مشخص می‌شوند.</li>
 </ul>
 
 <img src="line.gif" alt="separator" style="display: block; margin: 30px auto;" />
@@ -244,10 +243,10 @@ cd npvt-collector</pre>
 .
 ├── .github/
 │   └── workflows/
-│       └── collector.yml          # گردش‌کار اصلی (اجرای ساعتی + commit خودکار وضعیت)
+│       └── collector.yml          # گردش‌کار اصلی (زمان‌بندی ساعتی + commit خودکار وضعیت)
 │
 ├── src/
-│   └── npvt_collector.py          # اسکریپت اصلی (اسکن + حذف تکراری + ارسال لینک)
+│   └── npvt_collector.py          # اسکریپت اصلی (اسکن + حذف تکراری + ارسال)
 │
 ├── config/
 │   ├── requirements.txt           # وابستگی‌های پایتون
@@ -258,8 +257,8 @@ cd npvt-collector</pre>
 │   ├── channels.txt               # فهرست کانال‌های تلگرام (ورودی)
 │   ├── blocked_keywords.txt       # فهرست کلیدواژه‌های مسدود (ورودی؛ در اولین اجرا خودکار ساخته می‌شود)
 │   ├── last_message_id.json       # (تولیدشده) آخرین message_id بررسی‌شده هر کانال
-│   ├── seen_files.json            # (تولیدشده) آرشیو فایل‌های قبلاً ارسال‌شده (نام+حجم)
-│   ├── pending_send.json          # (تولیدشده) صف فایل‌هایی که هنوز ارسال نشده‌اند
+│   ├── seen_files.json            # (تولیدشده) آرشیو فایل‌های قبلاً ارسال‌شده (نام+حجم+زمان)
+│   ├── pending_send.json          # (تولیدشده) صف فایل‌هایی که به‌خاطر خطای واقعی ارسال نشده‌اند
 │   ├── npvt_report.txt            # (تولیدشده) گزارش خلاصه‌ی هر اجرا
 │   ├── channel_report.txt         # (تولیدشده) تاریخچه‌ی تعداد فایل یافت‌شده به ازای هر کانال
 │   ├── invalid_channels.txt       # (تولیدشده) کانال‌های نامعتبر/غیرقابل‌دسترسی در آخرین اجرا
@@ -299,7 +298,7 @@ cd npvt-collector</pre>
 </details>
 
 <details>
-<summary><strong>پیام لینک به کانال مقصد ارسال نمی‌شود</strong></summary>
+<summary><strong>پیام‌ها به کانال مقصد ارسال نمی‌شوند</strong></summary>
 <ul>
     <li>بررسی کنید که بات <strong>ادمین</strong> کانال مقصد باشد و دسترسی «ارسال پیام» داشته باشد.</li>
     <li><code>TARGET_CHANNEL</code> باید یوزرنیم عمومی (<code>@channel</code>) یا آیدی عددی صحیح (<code>-100...</code>) باشد.</li>
@@ -323,19 +322,20 @@ cd npvt-collector</pre>
 </details>
 
 <details>
-<summary><strong>در لاگ زیاد خطای <code>429 Too Many Requests</code> می‌بینم</strong></summary>
+<summary><strong>در لاگ خطای <code>429 Too Many Requests</code> می‌بینم</strong></summary>
 <ul>
-    <li>این یعنی تلگرام سرعت ارسال پیام‌های بات به کانال مقصد را محدود کرده (تقریباً سقف ۲۰ پیام در دقیقه به هر چت). این خطا اکنون به‌طور خودکار مدیریت می‌شود: اسکریپت دقیقاً به‌اندازه‌ی <code>retry_after</code> اعلام‌شده توسط تلگرام صبر و دوباره تلاش می‌کند (تا <code>MAX_SEND_RETRIES</code> بار).</li>
+    <li>چون هر اجرا فقط ۲ پیام (هدر + فهرست) می‌فرستد، این خطا خیلی بعید است؛ اگر دیدید، خودکار مدیریت می‌شود: اسکریپت دقیقاً به‌اندازه‌ی <code>retry_after</code> اعلام‌شده توسط تلگرام صبر و دوباره تلاش می‌کند (تا <code>MAX_SEND_RETRIES</code> بار).</li>
     <li>اگر پس از همه‌ی تلاش‌ها هم ارسال نشود، پیام <strong>گم نمی‌شود</strong> — در <code>data/pending_send.json</code> ذخیره و در اجرای بعدی دوباره امتحان می‌شود.</li>
-    <li>اگر این خطا زیاد تکرار می‌شود، مقدار <code>SLEEP_BETWEEN_SENDS</code> را (مثلاً به ۵) افزایش دهید یا <code>MAX_SENDS_PER_RUN</code> را کاهش دهید تا فشار کمتری روی هر اجرا باشد.</li>
 </ul>
 </details>
 
 <details>
-<summary><strong>خطای «The job has exceeded the maximum execution time»</strong></summary>
+<summary><strong>یک فایل که انتظار داشتم ارسال بشه، نیومد</strong></summary>
 <ul>
-    <li>این پروژه دیگر سقف زمانی خودش را روی Job تعریف نمی‌کند (<code>timeout-minutes</code> عمداً از <code>collector.yml</code> حذف شده)، پس اجرا به‌خاطر تنظیمات این پروژه متوقف نمی‌شود.</li>
-    <li>با این حال، خودِ GitHub Actions یک سقف مطلق <strong>۳۶۰ دقیقه‌ای (۶ ساعت)</strong> روی هر Job اعمال می‌کند که قابل‌دور زدن نیست — این محدودیت پلتفرم گیت‌هاب است. اگر به این سقف رسیدید، معمولاً نشانه‌ی این است که تعداد کانال‌های <code>data/channels.txt</code> یا حجم صف ارسال بسیار زیاد شده؛ تعداد کانال‌ها را کم کنید یا <code>MAX_SENDS_PER_RUN</code> را کاهش دهید تا هر اجرا سریع‌تر تمام شود (کارِ ارسالِ باقی‌مانده خودکار به اجرای بعدی منتقل می‌شود).</li>
+    <li>اول <code>data/filtered_files.txt</code> را چک کنید — اگر نام فایل حاوی یکی از کلیدواژه‌های <code>data/blocked_keywords.txt</code> باشد، عمداً منتشر نشده است.</li>
+    <li>بعد <code>data/seen_files.json</code> را بررسی کنید؛ اگر فایلی با همان نام+حجم قبلاً از کانال دیگری ارسال شده باشد، تکراری محسوب و رد می‌شود.</li>
+    <li>اگر در یک اجرا بیش از ۱۰ فایل جدید پیدا شده باشد و این فایل جزو ۱۰ تای جدیدترین نبوده، <strong>کاملاً کنار گذاشته شده</strong> و اصلاً ارسال نخواهد شد — این رفتار طبق درخواست صریح است، نه یک باگ.</li>
+    <li>در غیر این صورت، <code>data/pending_send.json</code> را چک کنید — ممکن است هنوز در صف ارسال (به‌خاطر یک خطای واقعی) باشد.</li>
 </ul>
 </details>
 
@@ -347,31 +347,14 @@ cd npvt-collector</pre>
 </ul>
 </details>
 
-<details>
-<summary><strong>فایلی که انتظار داشتم به کانال مقصد برسد، نرسید</strong></summary>
-<ul>
-    <li>ابتدا <code>data/filtered_files.txt</code> را چک کنید — اگر نام فایل حاوی یکی از کلیدواژه‌های <code>data/blocked_keywords.txt</code> باشد، عمداً منتشر نشده است.</li>
-    <li>اگر آنجا نبود، <code>data/seen_files.json</code> را بررسی کنید؛ اگر فایلی با همان نام+حجم قبلاً از کانال دیگری ارسال شده باشد، به‌عنوان تکراری نادیده گرفته می‌شود.</li>
-    <li>در غیر این صورت، <code>data/pending_send.json</code> را چک کنید — ممکن است هنوز در صف ارسال (مثلاً به‌خاطر محدودیت نرخ تلگرام) باشد.</li>
-</ul>
-</details>
-
-<details>
-<summary><strong>زنجیره‌ی اجرای خودکار متوقف شده و دیگر خودش اجرا نمی‌شود</strong></summary>
-<ul>
-    <li>اگر یک اجرا با خطا (Failure) تمام شود، مرحله‌ی <code>Trigger next run</code> اجرا نمی‌شود و چرخه متوقف می‌ماند — این رفتار عمدی است تا خطاها بی‌صدا تکرار نشوند.</li>
-    <li>تب <strong>Actions</strong> را باز کنید، آخرین اجرای ناموفق را ببینید و علت را برطرف کنید (مثلاً Secret اشتباه، یا Secret <code>GH_TOKEN</code> منقضی‌شده).</li>
-    <li>سپس یک‌بار دیگر دستی <strong>Run workflow</strong> بزنید تا زنجیره از نو شروع شود.</li>
-</ul>
-</details>
-
 <img src="line.gif" alt="separator" style="display: block; margin: 30px auto;" />
 
 <!-- سفارشی‌سازی -->
 <h2>🛠️ سفارشی‌سازی</h2>
 <ul>
-    <li>برای <strong>تغییر فرکانس اجرا</strong>، مقدار <code>cron</code> را در <code>collector.yml</code> ویرایش کنید.</li>
-    <li>برای <strong>تغییر متن پیام ارسالی</strong>، تابع <code>send_link_message</code> در <code>src/npvt_collector.py</code> را ویرایش کنید.</li>
+    <li>برای <strong>تغییر فرکانس اجرا</strong>، مقدار <code>cron</code> را در <code>collector.yml</code> ویرایش کنید (مثلاً <code>'0 */2 * * *'</code> برای هر دو ساعت).</li>
+    <li>برای <strong>تغییر تعداد فایل در هر اجرا</strong>، <code>MAX_FILES_PER_MESSAGE</code> را در <code>config/.env.example</code> یا Secrets تغییر دهید.</li>
+    <li>برای <strong>تغییر متن هدر یا فرمت پیام</strong>، مقدار <code>HEADER_TEXT</code> و تابع <code>build_file_list_message</code> در <code>src/npvt_collector.py</code> را ویرایش کنید.</li>
     <li>برای <strong>تغییر پسوند فایل هدف</strong> (مثلاً برای پروژه‌ای مشابه با پسوند دیگر)، مقدار <code>FILE_SUFFIX</code> را تغییر دهید.</li>
 </ul>
 
@@ -399,7 +382,7 @@ cd npvt-collector</pre>
 </div>
 
 <!-- keywords: npvt collector, npv tunnel config, telegram file collector,
-     t.me/s scraper, github actions collector, telegram bot forwarder,
+     t.me/s scraper, github actions collector, telegram bot,
      جمع آوری فایل تلگرام, کانفیگ NPV Tunnel, ربات تلگرام لینک -->
 
 </body>

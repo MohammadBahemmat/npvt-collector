@@ -31,7 +31,7 @@
 This project reads each channel's public web preview page (<code>t.me/s</code>) — the exact same technique used in your <code>V2ray-Collector</code> and <code>news-monitor</code> projects — with no need for an <strong>API, a user-account login, or a personal phone number</strong>.
 </p>
 <p>
-Every newly found file is compared against previously seen files by <strong>name + size</strong>, and duplicates are dropped; the link to each unique file is then sent, via a <strong>plain Telegram bot</strong> (no forwarding, no membership in source channels required), to a channel of your choice.
+Every newly found file is compared against previously seen files by <strong>name + size</strong>, and duplicates are dropped; then up to 10 of the newest unique files (by publish time on the source channel) are sent in a single message, via a <strong>plain Telegram bot</strong>, to a channel of your choice.
 </p>
 
 <img src="line.gif" alt="separator" style="display: block; margin: 30px auto;" />
@@ -48,40 +48,32 @@ Every newly found file is compared against previously seen files by <strong>name
     <td>No phone number, no user-account (Userbot) login, no need to join source channels. Only each channel's public web page (<code>t.me/s/&lt;channel&gt;</code>) is read.</td>
 </tr>
 <tr>
-    <td><strong>📄 Accurate file name & size extraction</strong></td>
-    <td>The name and size of every <code>.npvt</code> file (exactly as Telegram displays it, e.g. <code>3.5 KB</code>), plus a direct link to the message, are extracted.</td>
+    <td><strong>🕐 Precise hourly scheduling</strong></td>
+    <td>Runs on the hour via GitHub Actions' standard <code>cron</code> — simple, reliable, and needs no extra secrets.</td>
+</tr>
+<tr>
+    <td><strong>📄 Extracts name, size, and publish time</strong></td>
+    <td>For every <code>.npvt</code> file, the name, size (exactly as Telegram displays it), and the exact time the message was posted on the source channel are extracted.</td>
 </tr>
 <tr>
     <td><strong>🧹 Smart duplicate removal</strong></td>
     <td>A file is treated as a duplicate — and dropped — only when <strong>both name and size</strong> match another file (same channel, a different channel, or a previous run).</td>
 </tr>
 <tr>
+    <td><strong>🔟 Max 10 files, always the newest</strong></td>
+    <td>If more than 10 new files are found in one run, only the 10 newest (by publish time) are sent; the rest are — per your explicit request — completely discarded, not queued for the next run.</td>
+</tr>
+<tr>
     <td><strong>📤 Delivery via a plain Telegram bot</strong></td>
-    <td>The link to each unique file is sent with a simple Bot API call to your target channel; the bot only needs admin rights in your own target channel.</td>
-</tr>
-<tr>
-    <td><strong>🧩 Checkpointing</strong></td>
-    <td>The last checked <code>message_id</code> for every channel is saved; the next run only inspects new messages.</td>
-</tr>
-<tr>
-    <td><strong>💾 Persistent dedup archive</strong></td>
-    <td>Files whose link has already been sent are recorded in <code>data/seen_files.json</code> so they're never sent again.</td>
-</tr>
-<tr>
-    <td><strong>📊 Per-run report</strong></td>
-    <td>A summary of every run (found, duplicate, new, sent counts) is logged to <code>data/npvt_report.txt</code>.</td>
-</tr>
-<tr>
-    <td><strong>📈 Per-channel report (like V2ray-Collector)</strong></td>
-    <td><code>data/channel_report.txt</code> shows how many <code>.npvt</code> files were found per channel on every run; unreachable channels are also listed in <code>data/invalid_channels.txt</code>.</td>
-</tr>
-<tr>
-    <td><strong>🔁 Continuous self-chaining runs</strong></td>
-    <td>Just like <code>V2ray-Collector</code>, each run immediately triggers the next one when it finishes, and the cycle continues until you stop it.</td>
+    <td>A bold header message is sent, immediately followed by one message listing the files as hyperlinks; the bot only needs admin rights in your own target channel.</td>
 </tr>
 <tr>
     <td><strong>🚫 Filename keyword filter</strong></td>
     <td>Files whose name contains a keyword defined in <code>data/blocked_keywords.txt</code> are never collected or published; a record is kept in <code>data/filtered_files.txt</code> purely for transparency.</td>
+</tr>
+<tr>
+    <td><strong>📈 Per-channel report (like V2ray-Collector)</strong></td>
+    <td><code>data/channel_report.txt</code> shows how many <code>.npvt</code> files were found per channel on every run; unreachable channels are also listed in <code>data/invalid_channels.txt</code>.</td>
 </tr>
 <tr>
     <td><strong>🚀 Fully automated & free</strong></td>
@@ -123,6 +115,31 @@ Any file whose name contains one of the keywords below is never collected or pub
 
 <img src="line.gif" alt="separator" style="display: block; margin: 30px auto;" />
 
+<!-- Message format -->
+<h2>📨 Message Format</h2>
+<p>Each run, if there are new files to send, posts exactly <strong>two messages</strong> to the target channel:</p>
+<ol>
+    <li>A <strong>bold</strong> header message:
+        <pre class="ltr-block" dir="rtl">فایل های NPVT جدید 😁👇</pre>
+    </li>
+    <li>Immediately after, a message listing the files, each as a <strong>hyperlink</strong> to the original message on the source channel:
+        <pre class="ltr-block" dir="rtl">
+فایل 1   ← links to the original message
+فایل 2   ← links to the original message
+...
+فایل N   ← up to 10 total
+        </pre>
+    </li>
+</ol>
+<p>
+Files are ordered by <strong>newest publish time on the source channel first</strong> (File 1 = newest). If more than 10 new files are found in one run, only the 10 newest are sent, and the rest are — per explicit request — <strong>completely discarded</strong>: not queued for the next run, not reconsidered later. If no new files are found, no message (neither header nor list) is sent at all.
+</p>
+<div class="highlight">
+The one exception: if either of the two messages fails to send due to a genuine error (not the 10-file cap) — e.g. a temporary network outage or Telegram's rate limit — the entire batch is saved to <code>data/pending_send.json</code> and retried on the next run, <strong>before</strong> any newly found files.
+</div>
+
+<img src="line.gif" alt="separator" style="display: block; margin: 30px auto;" />
+
 <!-- Requirements -->
 <h2>📦 Requirements</h2>
 <ul>
@@ -152,32 +169,21 @@ Any file whose name contains one of the keywords below is never collected or pub
 <tr><td><code>MAX_PAGES_PER_CHANNEL</code></td><td><code>3</code></td><td>Max number of backward pages (<code>?before=</code>) to reach the previous checkpoint</td></tr>
 <tr><td><code>SLEEP_BETWEEN_CHANNELS</code></td><td><code>1.5</code></td><td>Delay (seconds) between checking channels</td></tr>
 <tr><td><code>SLEEP_BETWEEN_PAGES</code></td><td><code>1</code></td><td>Delay (seconds) between pages of a single channel</td></tr>
-<tr><td><code>SLEEP_BETWEEN_SENDS</code></td><td><code>3.5</code></td><td>Delay (seconds) between messages sent via the bot — keeps you under Telegram's ~20 messages/minute limit</td></tr>
+<tr><td><code>SLEEP_BETWEEN_SENDS</code></td><td><code>2</code></td><td>Delay (seconds) between the header message and the file-list message</td></tr>
 <tr><td><code>REQUEST_TIMEOUT</code></td><td><code>10</code></td><td>Max time (seconds) to wait for each HTTP request before it's considered failed</td></tr>
 <tr><td><code>MAX_SEND_RETRIES</code></td><td><code>6</code></td><td>Max number of retry attempts for a single message when Telegram returns a 429 (rate limit) error</td></tr>
 <tr><td><code>MAX_RETRY_AFTER_WAIT</code></td><td><code>90</code></td><td>Max time (seconds) to wait on any single retry, even if Telegram asks for longer</td></tr>
-<tr><td><code>MAX_SENDS_PER_RUN</code></td><td><code>40</code></td><td>Max number of messages <strong>each run</strong> attempts to send; the rest stay queued in <code>data/pending_send.json</code> for the next run</td></tr>
+<tr><td><code>MAX_FILES_PER_MESSAGE</code></td><td><code>10</code></td><td>Max number of files per run; anything beyond this is discarded unconditionally (not queued)</td></tr>
 </tbody>
 </table>
 
 <div class="highlight">
-<strong>🔐 Setting GitHub Secrets:</strong> Add these under <strong>Settings</strong> &gt; <strong>Secrets and variables</strong> &gt; <strong>Actions</strong>:
+<strong>🔐 Setting GitHub Secrets:</strong> only these two are needed. Add them under <strong>Settings</strong> &gt; <strong>Secrets and variables</strong> &gt; <strong>Actions</strong>:
 <pre class="ltr-block">
 BOT_TOKEN         → the token you got from BotFather
 TARGET_CHANNEL    → username (e.g. @npvt_backup) or numeric ID (e.g. -100xxxxxxxxxx) of the target channel
-GH_TOKEN          → a Personal Access Token with repo + workflow scope (needed for the self-chaining run)
 </pre>
-</div>
-
-<div class="highlight">
-<strong>🔗 About <code>GH_TOKEN</code> and self-chaining runs:</strong> Just like <code>V2ray-Collector</code>, instead of a fixed cron schedule, this project triggers the next run itself at the end of every run, and the cycle continues forever. The default token GitHub Actions creates (<code>GITHUB_TOKEN</code>) is not allowed, for security reasons, to trigger another workflow run — so a personal <strong>Personal Access Token</strong> is required. It's free to create:
-<ol>
-<li>Go to <a href="https://github.com/settings/tokens?type=beta" target="_blank">github.com/settings/tokens</a> (or Settings → Developer settings → Personal access tokens → Tokens (classic))</li>
-<li>Click <strong>Generate new token (classic)</strong></li>
-<li>Check the <code>repo</code> and <code>workflow</code> scopes</li>
-<li>Copy the generated token and save it as a secret named <code>GH_TOKEN</code></li>
-</ol>
-⚠️ Since this token is equivalent to scoped access to your GitHub account, set an expiration date on it and never store it anywhere other than GitHub Secrets.
+No other secret (like a Personal Access Token) is required.
 </div>
 
 <img src="line.gif" alt="separator" style="display: block; margin: 30px auto;" />
@@ -206,23 +212,17 @@ cd npvt-collector</pre>
 <!-- Automated run -->
 <h2>🤖 Setting Up Automated Runs with GitHub Actions</h2>
 
-<h3>1. Workflow file (self-chaining, just like V2ray-Collector)</h3>
+<h3>1. Workflow file (hourly cron)</h3>
 <p>The project runs via a YAML file at <code>.github/workflows/collector.yml</code>, which:</p>
 <ul>
-    <li>Only starts via <strong>workflow_dispatch</strong> (one initial manual run) — there's no fixed <code>cron</code>.</li>
+    <li>Runs automatically on the hour (<code>cron: '0 * * * *'</code>), and can also be triggered manually from the Actions tab (<strong>Run workflow</strong>).</li>
     <li>Scans every channel listed in <code>data/channels.txt</code>.</li>
-    <li>Removes duplicates and sends links for new files to the target channel.</li>
+    <li>Removes duplicates, picks up to 10 newest files, and sends them to the target channel.</li>
     <li>Commits the updated state files (checkpoint, dedup archive, <code>channel_report.txt</code>, <code>invalid_channels.txt</code>) back to the repository.</li>
-    <li><strong>Immediately after a successful run, it triggers a new run itself</strong> (the "Trigger next run" step), and this cycle continues until you stop it.</li>
 </ul>
 
 <div class="highlight">
-<strong>⚠️ Important note about the continuous self-chaining run:</strong>
-<ul>
-<li>If a run fails (e.g. a network hiccup or rate limit), the "Trigger next run" step won't execute and the chain stops completely; you'll need to trigger it again manually from the Actions tab (<strong>Run workflow</strong>).</li>
-<li>Since each run immediately triggers the next one with no delay, on <strong>Private</strong> repositories the free GitHub Actions minutes quota (typically 2,000 minutes/month) can be consumed faster than with an hourly schedule. To manage this, you can increase <code>SLEEP_BETWEEN_CHANNELS</code>, <code>SLEEP_BETWEEN_PAGES</code>, and <code>SLEEP_BETWEEN_SENDS</code> in <code>config/.env.example</code> so each run takes a bit longer between cycles, or switch <code>on: workflow_dispatch</code> to a simple <code>schedule: cron</code> (e.g. every 10 minutes) for a fixed-interval run instead of a continuous chain.</li>
-<li><strong>The job-level time limit was intentionally removed</strong> so a long run (e.g. due to a large channel list or a big send queue) doesn't get killed; however, GitHub Actions itself enforces an absolute, non-configurable 360-minute (6-hour) cap on every job.</li>
-</ul>
+<strong>⏱️ About scheduling precision:</strong> per GitHub's own documentation, <code>schedule</code> runs can be delayed by a few minutes during high-load periods — this is a platform limitation, not something this project's settings can remove. For a use case like this (hourly scan of a few channels), that delay is usually negligible. If absolute precision is critical, the only real solution is running a scheduled job on your own server (e.g. a VPS with real <code>cron</code>), not GitHub Actions.
 </div>
 
 <h3>2. Adding source channels</h3>
@@ -232,7 +232,7 @@ cd npvt-collector</pre>
 <p>After every run, two files under <code>data/</code> are updated:</p>
 <ul>
     <li><code>channel_report.txt</code> — for each channel, shows the history of how many <code>.npvt</code> files were found on each run, comma-separated in order; e.g. <code>napsternetv_file: 2, 0, 1</code> means the last three runs found 2, 0, and 1 new files respectively.</li>
-    <li><code>invalid_channels.txt</code> — an up-to-date list of channels that weren't readable the last time they were tested (doesn't exist, private, or blocked). Since each run only tests part of the channel list, this file is merged with fresh results each run rather than fully overwritten. These channels also show up as <code>ERR</code> in <code>channel_report.txt</code>.</li>
+    <li><code>invalid_channels.txt</code> — an up-to-date list of channels that weren't readable the last time they were tested (doesn't exist, private, or blocked). These channels also show up as <code>ERR</code> in <code>channel_report.txt</code>.</li>
 </ul>
 
 <img src="line.gif" alt="separator" style="display: block; margin: 30px auto;" />
@@ -243,10 +243,10 @@ cd npvt-collector</pre>
 .
 ├── .github/
 │   └── workflows/
-│       └── collector.yml          # main workflow (hourly run + automatic state commit)
+│       └── collector.yml          # main workflow (hourly schedule + automatic state commit)
 │
 ├── src/
-│   └── npvt_collector.py          # main script (scan + dedup + send link)
+│   └── npvt_collector.py          # main script (scan + dedup + send)
 │
 ├── config/
 │   ├── requirements.txt           # Python dependencies
@@ -257,8 +257,8 @@ cd npvt-collector</pre>
 │   ├── channels.txt               # list of Telegram channels (input)
 │   ├── blocked_keywords.txt       # blocked-keyword list (input; auto-created on first run)
 │   ├── last_message_id.json       # (generated) last checked message_id per channel
-│   ├── seen_files.json            # (generated) archive of already-sent files (name+size)
-│   ├── pending_send.json          # (generated) queue of files not sent yet
+│   ├── seen_files.json            # (generated) archive of already-sent files (name+size+time)
+│   ├── pending_send.json          # (generated) batch queued after a genuine send failure
 │   ├── npvt_report.txt            # (generated) per-run summary report
 │   ├── channel_report.txt         # (generated) per-channel history of files found
 │   ├── invalid_channels.txt       # (generated) unreachable/invalid channels from the latest run
@@ -298,7 +298,7 @@ cd npvt-collector</pre>
 </details>
 
 <details>
-<summary><strong>Link messages aren't being sent to the target channel</strong></summary>
+<summary><strong>Messages aren't being sent to the target channel</strong></summary>
 <ul>
     <li>Verify the bot is an <strong>admin</strong> of the target channel with posting rights.</li>
     <li><code>TARGET_CHANNEL</code> must be a valid public username (<code>@channel</code>) or numeric ID (<code>-100...</code>).</li>
@@ -322,19 +322,20 @@ cd npvt-collector</pre>
 </details>
 
 <details>
-<summary><strong>I'm seeing lots of <code>429 Too Many Requests</code> errors in the log</strong></summary>
+<summary><strong>I'm seeing a <code>429 Too Many Requests</code> error in the log</strong></summary>
 <ul>
-    <li>This means Telegram is throttling how fast the bot can post to the target channel (roughly a 20 messages/minute cap per chat). This is now handled automatically: the script waits exactly as long as the <code>retry_after</code> value Telegram returns, then retries (up to <code>MAX_SEND_RETRIES</code> times).</li>
+    <li>Since each run only sends 2 messages (header + list), this is unlikely; if it happens, it's handled automatically: the script waits exactly as long as the <code>retry_after</code> value Telegram returns, then retries (up to <code>MAX_SEND_RETRIES</code> times).</li>
     <li>If it still fails after all retries, the message is <strong>not lost</strong> — it's saved to <code>data/pending_send.json</code> and retried again on the next run.</li>
-    <li>If this happens a lot, increase <code>SLEEP_BETWEEN_SENDS</code> (e.g. to 5) or lower <code>MAX_SENDS_PER_RUN</code> to reduce pressure per run.</li>
 </ul>
 </details>
 
 <details>
-<summary><strong>Error: "The job has exceeded the maximum execution time"</strong></summary>
+<summary><strong>A file I expected never got sent</strong></summary>
 <ul>
-    <li>This project no longer sets its own job-level time limit (<code>timeout-minutes</code> was intentionally removed from <code>collector.yml</code>), so this project's own settings won't be the cause.</li>
-    <li>However, GitHub Actions itself enforces an absolute, non-configurable <strong>360-minute (6-hour)</strong> cap on every job — this is a platform limit, not something this project defines. If you're hitting it, it usually means your <code>data/channels.txt</code> list or send queue has grown very large; trim the channel list or lower <code>MAX_SENDS_PER_RUN</code> so each run finishes faster (the remaining send work automatically carries over to the next run).</li>
+    <li>First check <code>data/filtered_files.txt</code> — if the file's name matched a keyword in <code>data/blocked_keywords.txt</code>, it was intentionally not published.</li>
+    <li>Then check <code>data/seen_files.json</code>; if a file with the same name+size was already sent from a different channel, it's skipped as a duplicate.</li>
+    <li>If more than 10 new files were found in one run and this file wasn't among the 10 newest, it was <strong>completely discarded</strong> and never sent — this is intentional behavior, not a bug.</li>
+    <li>Otherwise, check <code>data/pending_send.json</code> — it may still be queued due to a genuine send error.</li>
 </ul>
 </details>
 
@@ -346,31 +347,14 @@ cd npvt-collector</pre>
 </ul>
 </details>
 
-<details>
-<summary><strong>A file I expected never reached the target channel</strong></summary>
-<ul>
-    <li>First check <code>data/filtered_files.txt</code> — if the file's name matched a keyword in <code>data/blocked_keywords.txt</code>, it was intentionally not published.</li>
-    <li>If it's not there, check <code>data/seen_files.json</code>; if a file with the same name+size was already sent from a different channel, it's skipped as a duplicate.</li>
-    <li>Otherwise, check <code>data/pending_send.json</code> — it may still be queued (e.g. due to Telegram's rate limit).</li>
-</ul>
-</details>
-
-<details>
-<summary><strong>The self-chaining run has stopped and isn't triggering itself anymore</strong></summary>
-<ul>
-    <li>If a run finishes with a failure, the <code>Trigger next run</code> step won't execute and the cycle stays stopped — this is intentional, so errors don't repeat silently.</li>
-    <li>Open the <strong>Actions</strong> tab, check the last failed run, and fix the cause (e.g. a wrong secret, or an expired <code>GH_TOKEN</code>).</li>
-    <li>Then trigger <strong>Run workflow</strong> manually once more to restart the chain.</li>
-</ul>
-</details>
-
 <img src="line.gif" alt="separator" style="display: block; margin: 30px auto;" />
 
 <!-- Customization -->
 <h2>🛠️ Customization</h2>
 <ul>
-    <li>To <strong>change the run frequency</strong>, edit the <code>cron</code> value in <code>collector.yml</code>.</li>
-    <li>To <strong>change the message text</strong>, edit the <code>send_link_message</code> function in <code>src/npvt_collector.py</code>.</li>
+    <li>To <strong>change the run frequency</strong>, edit the <code>cron</code> value in <code>collector.yml</code> (e.g. <code>'0 */2 * * *'</code> for every 2 hours).</li>
+    <li>To <strong>change how many files are sent per run</strong>, adjust <code>MAX_FILES_PER_MESSAGE</code> in <code>config/.env.example</code> or your secrets.</li>
+    <li>To <strong>change the header text or message format</strong>, edit <code>HEADER_TEXT</code> and the <code>build_file_list_message</code> function in <code>src/npvt_collector.py</code>.</li>
     <li>To <strong>target a different file extension</strong> (e.g. for a similar project), change the <code>FILE_SUFFIX</code> value.</li>
 </ul>
 
@@ -398,7 +382,7 @@ For developers: please do a test run locally before submitting changes.
 </div>
 
 <!-- keywords: npvt collector, npv tunnel config, telegram file collector,
-     t.me/s scraper, github actions collector, telegram bot forwarder -->
+     t.me/s scraper, github actions collector, telegram bot -->
 
 </body>
 </html>

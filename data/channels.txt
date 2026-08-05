@@ -19,7 +19,6 @@ confing_proxi1
 cooonfig
 cpy_teel
 dalton_ping
-dns_amir
 e404tech
 eliv2ray
 farsiproxi

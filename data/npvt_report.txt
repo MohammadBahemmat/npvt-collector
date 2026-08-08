@@ -49,3 +49,4 @@
 2026-08-08 13:37:39 | found=81 duplicates=15 already_sent=5 batch=10 sent=10 failed=0 discarded=51 pending_retry=0 filtered=0 invalid_channels=0
 2026-08-08 16:08:31 | found=83 duplicates=20 already_sent=5 batch=10 sent=10 failed=0 discarded=48 pending_retry=0 filtered=0 invalid_channels=0
 2026-08-08 19:21:32 | found=86 duplicates=22 already_sent=1 batch=10 sent=10 failed=0 discarded=53 pending_retry=0 filtered=0 invalid_channels=0
+2026-08-08 22:07:38 | found=123 duplicates=35 already_sent=4 batch=10 sent=10 failed=0 discarded=74 pending_retry=0 filtered=0 invalid_channels=1

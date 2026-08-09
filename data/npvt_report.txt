@@ -52,3 +52,4 @@
 2026-08-08 22:07:38 | found=123 duplicates=35 already_sent=4 batch=10 sent=10 failed=0 discarded=74 pending_retry=0 filtered=0 invalid_channels=1
 2026-08-09 02:57:11 | found=9 duplicates=1 already_sent=1 batch=7 sent=7 failed=0 discarded=0 pending_retry=0 filtered=2 invalid_channels=1
 2026-08-09 04:54:57 | found=11 duplicates=1 already_sent=2 batch=8 sent=8 failed=0 discarded=0 pending_retry=0 filtered=0 invalid_channels=1
+2026-08-09 07:45:22 | found=49 duplicates=9 already_sent=5 batch=10 sent=10 failed=0 discarded=25 pending_retry=0 filtered=0 invalid_channels=1

@@ -65,3 +65,4 @@
 2026-08-10 14:11:11 | found=68 duplicates=16 already_sent=4 batch=10 sent=10 failed=0 discarded=38 pending_retry=0 filtered=0 invalid_channels=1
 2026-08-10 16:37:49 | found=69 duplicates=18 already_sent=5 batch=10 sent=10 failed=0 discarded=36 pending_retry=0 filtered=0 invalid_channels=1
 2026-08-10 19:47:44 | found=119 duplicates=36 already_sent=9 batch=10 sent=10 failed=0 discarded=64 pending_retry=0 filtered=0 invalid_channels=1
+2026-08-10 22:25:35 | found=89 duplicates=36 already_sent=6 batch=10 sent=10 failed=0 discarded=37 pending_retry=0 filtered=2 invalid_channels=1

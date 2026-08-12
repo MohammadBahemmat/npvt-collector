@@ -74,3 +74,4 @@
 2026-08-11 16:42:00 | found=65 duplicates=13 already_sent=8 batch=10 sent=10 failed=0 discarded=34 pending_retry=0 filtered=0 invalid_channels=1
 2026-08-11 19:51:26 | found=100 duplicates=19 already_sent=13 batch=10 sent=10 failed=0 discarded=58 pending_retry=0 filtered=0 invalid_channels=1
 2026-08-11 22:29:52 | found=116 duplicates=40 already_sent=6 batch=10 sent=10 failed=0 discarded=60 pending_retry=0 filtered=0 invalid_channels=1
+2026-08-12 03:16:07 | found=58 duplicates=28 already_sent=3 batch=10 sent=10 failed=0 discarded=17 pending_retry=0 filtered=1 invalid_channels=1

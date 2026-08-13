@@ -83,3 +83,4 @@
 2026-08-12 19:53:59 | found=57 duplicates=9 already_sent=2 batch=10 sent=10 failed=0 discarded=36 pending_retry=0 filtered=0 invalid_channels=3
 2026-08-12 22:33:18 | found=54 duplicates=15 already_sent=4 batch=10 sent=10 failed=0 discarded=25 pending_retry=0 filtered=0 invalid_channels=2
 2026-08-13 03:20:11 | found=35 duplicates=15 already_sent=4 batch=10 sent=10 failed=0 discarded=6 pending_retry=0 filtered=0 invalid_channels=4
+2026-08-13 05:28:32 | found=48 duplicates=14 already_sent=3 batch=10 sent=10 failed=0 discarded=21 pending_retry=0 filtered=0 invalid_channels=2

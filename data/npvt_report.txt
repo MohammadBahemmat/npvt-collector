@@ -92,3 +92,4 @@
 2026-08-13 22:29:29 | found=119 duplicates=36 already_sent=4 batch=10 sent=10 failed=0 discarded=69 pending_retry=0 filtered=0 invalid_channels=2
 2026-08-14 03:17:18 | found=78 duplicates=37 already_sent=4 batch=10 sent=10 failed=0 discarded=27 pending_retry=0 filtered=0 invalid_channels=2
 2026-08-14 05:25:07 | found=66 duplicates=33 already_sent=12 batch=10 sent=10 failed=0 discarded=11 pending_retry=0 filtered=0 invalid_channels=2
+2026-08-14 08:06:38 | found=70 duplicates=19 already_sent=11 batch=10 sent=10 failed=0 discarded=30 pending_retry=0 filtered=0 invalid_channels=2

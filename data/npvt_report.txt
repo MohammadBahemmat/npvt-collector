@@ -120,3 +120,4 @@
 2026-08-17 10:20:51 | found=63 duplicates=17 already_sent=5 batch=10 sent=10 failed=0 discarded=31 pending_retry=0 filtered=0 invalid_channels=2
 2026-08-17 13:32:18 | found=99 duplicates=23 already_sent=8 batch=10 sent=10 failed=0 discarded=58 pending_retry=0 filtered=0 invalid_channels=2
 2026-08-17 16:05:20 | found=54 duplicates=7 already_sent=6 batch=10 sent=10 failed=0 discarded=31 pending_retry=0 filtered=0 invalid_channels=2
+2026-08-17 19:21:11 | found=50 duplicates=7 already_sent=0 batch=10 sent=10 failed=0 discarded=33 pending_retry=0 filtered=2 invalid_channels=2

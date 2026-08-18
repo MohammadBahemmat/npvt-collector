@@ -124,3 +124,4 @@
 2026-08-17 22:05:10 | found=76 duplicates=15 already_sent=1 batch=10 sent=10 failed=0 discarded=50 pending_retry=0 filtered=0 invalid_channels=2
 2026-08-18 02:10:23 | found=24 duplicates=7 already_sent=0 batch=10 sent=10 failed=0 discarded=7 pending_retry=0 filtered=0 invalid_channels=2
 2026-08-18 04:25:49 | found=18 duplicates=6 already_sent=5 batch=7 sent=7 failed=0 discarded=0 pending_retry=0 filtered=0 invalid_channels=2
+2026-08-18 07:29:36 | found=52 duplicates=12 already_sent=2 batch=10 sent=10 failed=0 discarded=28 pending_retry=0 filtered=0 invalid_channels=2

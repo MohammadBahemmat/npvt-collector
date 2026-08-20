@@ -140,3 +140,4 @@
 2026-08-19 22:06:02 | found=90 duplicates=20 already_sent=4 batch=10 sent=10 failed=0 discarded=56 pending_retry=0 filtered=0 invalid_channels=2
 2026-08-20 02:12:12 | found=48 duplicates=23 already_sent=1 batch=10 sent=10 failed=0 discarded=14 pending_retry=0 filtered=0 invalid_channels=2
 2026-08-20 04:27:04 | found=35 duplicates=17 already_sent=3 batch=10 sent=10 failed=0 discarded=5 pending_retry=0 filtered=0 invalid_channels=3
+2026-08-20 07:33:38 | found=107 duplicates=39 already_sent=6 batch=10 sent=10 failed=0 discarded=52 pending_retry=0 filtered=0 invalid_channels=2

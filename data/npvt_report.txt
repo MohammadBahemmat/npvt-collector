@@ -181,3 +181,4 @@
 2026-08-25 04:28:22 | found=25 duplicates=11 already_sent=5 batch=9 sent=9 failed=0 discarded=0 pending_retry=0 filtered=0 invalid_channels=2
 2026-08-25 07:35:40 | found=64 duplicates=26 already_sent=13 batch=10 sent=10 failed=0 discarded=15 pending_retry=0 filtered=0 invalid_channels=2
 2026-08-25 10:10:52 | found=47 duplicates=8 already_sent=8 batch=10 sent=10 failed=0 discarded=21 pending_retry=0 filtered=0 invalid_channels=2
+2026-08-25 13:40:10 | found=59 duplicates=12 already_sent=4 batch=10 sent=10 failed=0 discarded=33 pending_retry=0 filtered=0 invalid_channels=2

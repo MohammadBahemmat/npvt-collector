@@ -199,3 +199,4 @@
 2026-08-28 22:45:49 | found=129 duplicates=33 already_sent=2 batch=10 sent=10 failed=0 discarded=84 pending_retry=0 filtered=0 invalid_channels=2
 2026-08-29 07:28:34 | found=53 duplicates=22 already_sent=5 batch=10 sent=10 failed=0 discarded=16 pending_retry=0 filtered=0 invalid_channels=2
 2026-08-29 14:47:05 | found=148 duplicates=46 already_sent=8 batch=10 sent=10 failed=0 discarded=84 pending_retry=0 filtered=0 invalid_channels=2
+2026-08-29 18:57:01 | found=108 duplicates=37 already_sent=9 batch=10 sent=10 failed=0 discarded=52 pending_retry=0 filtered=0 invalid_channels=2

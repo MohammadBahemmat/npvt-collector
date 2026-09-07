@@ -240,3 +240,4 @@
 2026-09-06 15:52:45 | found=78 duplicates=28 already_sent=7 batch=10 sent=10 failed=0 discarded=33 pending_retry=0 filtered=0 invalid_channels=2
 2026-09-06 20:55:54 | found=94 duplicates=27 already_sent=2 batch=10 sent=10 failed=0 discarded=55 pending_retry=0 filtered=0 invalid_channels=1
 2026-09-06 23:15:17 | found=60 duplicates=32 already_sent=11 batch=10 sent=10 failed=0 discarded=7 pending_retry=0 filtered=0 invalid_channels=1
+2026-09-07 05:19:25 | found=60 duplicates=47 already_sent=7 batch=6 sent=6 failed=0 discarded=0 pending_retry=0 filtered=0 invalid_channels=1

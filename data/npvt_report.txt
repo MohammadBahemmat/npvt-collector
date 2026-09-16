@@ -282,3 +282,4 @@
 2026-09-15 12:14:20 | found=95 duplicates=23 already_sent=7 batch=10 sent=10 failed=0 discarded=55 pending_retry=0 filtered=0 invalid_channels=2
 2026-09-15 17:22:40 | found=71 duplicates=13 already_sent=6 batch=10 sent=10 failed=0 discarded=42 pending_retry=0 filtered=0 invalid_channels=2
 2026-09-15 21:51:27 | found=76 duplicates=28 already_sent=5 batch=10 sent=10 failed=0 discarded=33 pending_retry=0 filtered=0 invalid_channels=2
+2026-09-16 05:22:26 | found=76 duplicates=42 already_sent=6 batch=10 sent=10 failed=0 discarded=18 pending_retry=0 filtered=0 invalid_channels=2

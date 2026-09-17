@@ -287,3 +287,4 @@
 2026-09-16 17:22:14 | found=109 duplicates=41 already_sent=12 batch=10 sent=10 failed=0 discarded=46 pending_retry=0 filtered=0 invalid_channels=2
 2026-09-16 21:48:24 | found=58 duplicates=18 already_sent=1 batch=10 sent=10 failed=0 discarded=29 pending_retry=0 filtered=0 invalid_channels=2
 2026-09-16 23:57:42 | found=44 duplicates=22 already_sent=4 batch=10 sent=10 failed=0 discarded=8 pending_retry=0 filtered=0 invalid_channels=2
+2026-09-17 05:30:34 | found=33 duplicates=8 already_sent=3 batch=10 sent=10 failed=0 discarded=12 pending_retry=0 filtered=0 invalid_channels=2

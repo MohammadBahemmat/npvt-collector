@@ -345,3 +345,4 @@
 2026-09-29 18:21:17 | found=75 duplicates=15 already_sent=4 batch=10 sent=10 failed=0 discarded=46 pending_retry=0 filtered=0 invalid_channels=3
 2026-09-29 22:43:04 | found=41 duplicates=11 already_sent=3 batch=10 sent=10 failed=0 discarded=17 pending_retry=0 filtered=0 invalid_channels=3
 2026-09-30 06:04:13 | found=33 duplicates=9 already_sent=5 batch=10 sent=10 failed=0 discarded=9 pending_retry=0 filtered=0 invalid_channels=3
+2026-09-30 13:06:28 | found=62 duplicates=18 already_sent=4 batch=10 sent=10 failed=0 discarded=30 pending_retry=0 filtered=0 invalid_channels=3

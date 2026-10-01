@@ -1068,6 +1068,7 @@ kanfingvporocsi
 kangfing0
 karevpnbot
 karina_edu
+kasibam1
 kaveh_vpn
 keepnetbot
 keepnetvpnbot
@@ -1711,6 +1712,7 @@ proxy_aslii
 proxy_badss
 proxy_kafee
 proxy_kon
+proxy_magazine
 proxy_mtm
 proxy_nepstar
 proxy_pj
@@ -2367,6 +2369,7 @@ v2ray_official
 v2ray_outlineir
 v2ray_plusz
 v2ray_proxy_npv
+v2ray_proxyz
 v2ray_spatial
 v2ray_spe
 v2ray_swhil
@@ -2627,6 +2630,7 @@ vpnlinkapp
 vpnmaan
 vpnmaan2
 vpnmasi
+vpnmasi_gp
 vpnmoments
 vpnmstr1
 vpnnamavabot

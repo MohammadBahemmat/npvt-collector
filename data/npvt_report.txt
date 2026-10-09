@@ -377,3 +377,4 @@
 2026-10-08 19:06:44 | found=81 duplicates=23 already_sent=5 batch=10 sent=10 failed=0 discarded=43 pending_retry=0 filtered=0 invalid_channels=4
 2026-10-09 01:32:35 | found=53 duplicates=18 already_sent=2 batch=10 sent=10 failed=0 discarded=23 pending_retry=0 filtered=0 invalid_channels=4
 2026-10-09 11:00:10 | found=76 duplicates=21 already_sent=6 batch=10 sent=10 failed=0 discarded=39 pending_retry=0 filtered=0 invalid_channels=6
+2026-10-09 18:36:14 | found=76 duplicates=9 already_sent=3 batch=10 sent=10 failed=0 discarded=54 pending_retry=0 filtered=0 invalid_channels=6

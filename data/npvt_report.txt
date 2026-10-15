@@ -401,3 +401,4 @@
 2026-10-15 05:18:50 | found=23 duplicates=7 already_sent=3 batch=10 sent=10 failed=0 discarded=3 pending_retry=0 filtered=0 invalid_channels=5
 2026-10-15 12:13:17 | found=66 duplicates=16 already_sent=5 batch=10 sent=10 failed=0 discarded=35 pending_retry=0 filtered=0 invalid_channels=5
 2026-10-15 17:27:17 | found=37 duplicates=7 already_sent=4 batch=10 sent=10 failed=0 discarded=16 pending_retry=0 filtered=0 invalid_channels=5
+2026-10-15 21:52:26 | found=23 duplicates=4 already_sent=2 batch=10 sent=10 failed=0 discarded=7 pending_retry=0 filtered=0 invalid_channels=5

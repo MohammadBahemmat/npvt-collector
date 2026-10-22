@@ -430,3 +430,4 @@
 2026-10-21 17:45:07 | found=44 duplicates=10 already_sent=1 batch=10 sent=10 failed=0 discarded=23 pending_retry=0 filtered=0 invalid_channels=6
 2026-10-21 22:04:09 | found=61 duplicates=24 already_sent=2 batch=10 sent=10 failed=0 discarded=25 pending_retry=0 filtered=0 invalid_channels=6
 2026-10-22 05:28:00 | found=28 duplicates=23 already_sent=1 batch=4 sent=4 failed=0 discarded=0 pending_retry=0 filtered=0 invalid_channels=6
+2026-10-22 12:32:44 | found=42 duplicates=11 already_sent=1 batch=10 sent=10 failed=0 discarded=20 pending_retry=0 filtered=0 invalid_channels=6

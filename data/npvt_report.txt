@@ -457,3 +457,4 @@
 2026-10-27 20:20:05 | found=52 duplicates=17 already_sent=5 batch=10 sent=10 failed=0 discarded=20 pending_retry=0 filtered=0 invalid_channels=5
 2026-10-28 00:49:08 | found=17 duplicates=4 already_sent=1 batch=10 sent=10 failed=0 discarded=2 pending_retry=0 filtered=0 invalid_channels=5
 2026-10-28 06:26:02 | found=25 duplicates=1 already_sent=1 batch=10 sent=10 failed=0 discarded=13 pending_retry=0 filtered=0 invalid_channels=5
+2026-10-28 13:38:16 | found=84 duplicates=20 already_sent=12 batch=10 sent=10 failed=0 discarded=42 pending_retry=0 filtered=0 invalid_channels=5

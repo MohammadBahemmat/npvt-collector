@@ -483,3 +483,4 @@
 2026-11-04 20:07:55 | found=97 duplicates=38 already_sent=7 batch=10 sent=10 failed=0 discarded=42 pending_retry=0 filtered=0 invalid_channels=4
 2026-11-05 01:53:28 | found=24 duplicates=5 already_sent=4 batch=10 sent=10 failed=0 discarded=5 pending_retry=0 filtered=0 invalid_channels=4
 2026-11-05 11:35:49 | found=36 duplicates=5 already_sent=1 batch=10 sent=10 failed=0 discarded=20 pending_retry=0 filtered=0 invalid_channels=4
+2026-11-05 20:21:36 | found=82 duplicates=19 already_sent=4 batch=10 sent=10 failed=0 discarded=49 pending_retry=0 filtered=0 invalid_channels=4

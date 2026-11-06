@@ -485,3 +485,4 @@
 2026-11-05 11:35:49 | found=36 duplicates=5 already_sent=1 batch=10 sent=10 failed=0 discarded=20 pending_retry=0 filtered=0 invalid_channels=4
 2026-11-05 20:21:36 | found=82 duplicates=19 already_sent=4 batch=10 sent=10 failed=0 discarded=49 pending_retry=0 filtered=0 invalid_channels=4
 2026-11-06 01:53:38 | found=11 duplicates=2 already_sent=0 batch=9 sent=9 failed=0 discarded=0 pending_retry=0 filtered=0 invalid_channels=4
+2026-11-06 11:35:55 | found=41 duplicates=10 already_sent=5 batch=10 sent=10 failed=0 discarded=16 pending_retry=0 filtered=0 invalid_channels=4

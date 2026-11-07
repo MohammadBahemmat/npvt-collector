@@ -490,3 +490,4 @@
 2026-11-07 01:21:33 | found=18 duplicates=6 already_sent=0 batch=10 sent=0 failed=10 discarded=2 pending_retry=10 filtered=0 invalid_channels=4
 2026-11-07 10:46:29 | found=55 duplicates=20 already_sent=2 batch=10 sent=10 failed=0 discarded=33 pending_retry=0 filtered=0 invalid_channels=4
 2026-11-07 17:56:27 | found=69 duplicates=28 already_sent=5 batch=10 sent=10 failed=0 discarded=26 pending_retry=0 filtered=0 invalid_channels=4
+2026-11-07 22:22:30 | found=35 duplicates=11 already_sent=1 batch=10 sent=10 failed=0 discarded=13 pending_retry=0 filtered=0 invalid_channels=4

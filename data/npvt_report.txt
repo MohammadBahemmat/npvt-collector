@@ -524,3 +524,4 @@
 2026-11-18 20:59:05 | found=38 duplicates=10 already_sent=2 batch=10 sent=10 failed=0 discarded=16 pending_retry=0 filtered=0 invalid_channels=5
 2026-11-19 02:54:43 | found=14 duplicates=1 already_sent=1 batch=10 sent=10 failed=0 discarded=2 pending_retry=0 filtered=0 invalid_channels=5
 2026-11-19 12:15:32 | found=16 duplicates=1 already_sent=2 batch=10 sent=10 failed=0 discarded=3 pending_retry=0 filtered=0 invalid_channels=5
+2026-11-19 21:09:44 | found=24 duplicates=1 already_sent=1 batch=10 sent=0 failed=10 discarded=12 pending_retry=10 filtered=0 invalid_channels=4
